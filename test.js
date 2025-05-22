@@ -28,7 +28,6 @@ function main() {
         exit();
     }
 
-    console.show();
     handleVideoInteraction();
     // let retryCount = 0;
     // while (retryCount++ < MAX_RETRY) {
@@ -95,6 +94,7 @@ function launchApp(packageName) {
 // 打开评论区
 function openCommentSection() {
     commentBtn = idContains("cok").findOne(DELAY.FIND_ELEMENT);
+    console.show(commentBtn);
 
     if (commentBtn) {
         // click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
