@@ -94,11 +94,10 @@ function launchApp(packageName) {
 // 打开评论区
 function openCommentSection() {
     commentBtn = idContains("cok").findOne(DELAY.FIND_ELEMENT);
-    console.log('commentBtn:', commentBtn);
 
     if (commentBtn) {
         // click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
-        commentBtn.click()
+        commentBtn.clickCenter()
         return true;
     }
     
@@ -124,7 +123,7 @@ function clickFirstCommentAvatar() {
     
     if (firstAvatar) {
         // click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
-        firstAvatar.click();
+        firstAvatar.clickCenter();
         return true;
     }
     return false;
