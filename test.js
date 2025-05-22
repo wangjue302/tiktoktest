@@ -7,6 +7,8 @@ if (!requestScreenCapture()) {
 // 获取TikTok的包名和活动名（不同设备可能不同）
 const tiktokPackageName = "com.zhiliaoapp.musically"; // 国际版TikTok的包名
 
+toast("1112323232");
+
 launchTikTok();
 
 // 启动TikTok应用
@@ -30,8 +32,7 @@ function launchTikTok() {
         return false;
     }
 
-    // 查找并点击评论按钮
-    let commentBtn = findCommentButton();
+    const commentBtn = findCommentButton();
     if (commentBtn) {
         click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
         toast("正在打开评论区");
@@ -41,6 +42,7 @@ function launchTikTok() {
     }
 }
 
+// 查找并点击评论按钮
 function findCommentButton() {
     commentBtn = descContains("评论").findOne(3000);
     if (commentBtn) return commentBtn;
