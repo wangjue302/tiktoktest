@@ -27,17 +27,17 @@ function main() {
         toast("启动TikTok失败");
         exit();
     }
-    
-    let retryCount = 0;
-    while (retryCount++ < MAX_RETRY) {
-        handleVideoInteraction();
+    handleVideoInteraction();
+    // let retryCount = 0;
+    // while (retryCount++ < MAX_RETRY) {
+    //     handleVideoInteraction();
         
-        // 滑动到下一个视频
-        swipeToNextVideo();
-    }
+    //     // 滑动到下一个视频
+    //     swipeToNextVideo();
+    // }
     
-    toast("脚本执行完成");
-    exit();
+    // toast("脚本执行完成");
+    // exit();
 }
 
 
