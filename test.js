@@ -52,7 +52,7 @@ function handleVideoInteraction() {
     
     // 检查是否有评论
     if (checkCommentsExist()) {
-        toast("检测到评论，点击第一条评论头像");
+        toast("检测到评论，点击第一条评论用户");
         clickFirstCommentAvatar();
         sleep(3000);  // 等待用户主页加载
         
