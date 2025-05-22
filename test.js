@@ -93,10 +93,10 @@ function launchApp(packageName) {
 // 打开评论区
 function openCommentSection() {
     commentBtn = idContains("cok").findOne(DELAY.FIND_ELEMENT);
-    console.show("评论按钮:", commentBtn);
 
     if (commentBtn) {
-        click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
+        // click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
+        commentBtn.click()
         return true;
     }
     
@@ -123,7 +123,8 @@ function clickFirstCommentAvatar() {
         .findOne(2000);
     
     if (firstAvatar) {
-        click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
+        // click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
+        firstAvatar.click();
         return true;
     }
     return false;
