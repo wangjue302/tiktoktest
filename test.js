@@ -93,7 +93,7 @@ function launchApp(packageName) {
 
 // 打开评论区
 function openCommentSection() {
-    commentBtn = idContains("cok").findOne(DELAY.FIND_ELEMENT);
+    commentBtn = descContains("comment").findOne(DELAY.FIND_ELEMENT);
 
     if (commentBtn) {
         // click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
