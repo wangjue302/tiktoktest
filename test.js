@@ -97,7 +97,7 @@ function openCommentSection() {
 
     if (commentBtn) {
         // click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
-        commentBtn.clickCenter()
+        commentBtn.click()
         return true;
     }
     
@@ -123,7 +123,7 @@ function clickFirstCommentAvatar() {
     
     if (firstAvatar) {
         // click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
-        firstAvatar.clickCenter();
+        firstAvatar.click();
         return true;
     }
     return false;
