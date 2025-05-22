@@ -51,7 +51,8 @@ function handleVideoInteraction() {
     sleep(DELAY.OPEN_COMMENT);
     
     // 检查是否有评论
-    if (checkCommentsExist()) {
+    const commentList = checkCommentsExist();
+    if (commentList) {
         console.show("检测到评论");
         toast("检测到评论，点击第一条评论用户");
         clickFirstCommentAvatar();
@@ -105,13 +106,11 @@ function openCommentSection() {
 
 // 查找评论列表容器
 function checkCommentsExist() {
-    const commentList = className("android.widget.FrameLayout").find(DELAY.FIND_ELEMENT);
+    const commentList = className("android.widget.FrameLayout").untilFind();
     console.log(commentList);
     if (!commentList) return false;
     
-    // 查找评论项
-    const comments = commentList.children();
-    return comments && comments.length > 0;
+    return commentList
 }
 
 // 查找第一个评论头像
