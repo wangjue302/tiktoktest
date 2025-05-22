@@ -12,8 +12,8 @@ launchTikTok();
 
 function launchTikTok() {
     // 检查TikTok是否已安装
-    if (!getPackageName(tiktokPackageName)) {
-        toast("未找到TikTok应用111");
+    if (!getAppName(tiktokPackageName)) {
+        toast("未找到TikTok应用");
         // 可以添加跳转到应用商店的逻辑
         return;
     }
