@@ -52,6 +52,7 @@ function handleVideoInteraction() {
     
     // 检查是否有评论
     if (checkCommentsExist()) {
+        console.show("检测到评论");
         toast("检测到评论，点击第一条评论用户");
         clickFirstCommentAvatar();
 
