@@ -54,7 +54,9 @@ function handleVideoInteraction() {
     if (checkCommentsExist()) {
         toast("检测到评论，点击第一条评论用户");
         clickFirstCommentAvatar();
-        sleep(3000);  // 等待用户主页加载
+
+        // 等待用户主页加载
+        sleep(3000);
         
         // 返回视频页面
         back();
