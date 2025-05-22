@@ -19,7 +19,7 @@ function launchTikTok() {
     
     // 尝试通过包名启动
     app.launch(tiktokPackageName);
-    toast("正在打开TikTok...");
+    toast("正在打开TikTok");
     
     // 等待应用打开
     sleep(3000);
