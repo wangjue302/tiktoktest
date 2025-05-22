@@ -2,7 +2,7 @@
 // TikTok包名
 const TIKTOK_PACKAGE = "com.zhiliaoapp.musically"; 
 
-// 最大重试次数 
+// 最大重试次数  
 const MAX_RETRY = 3;
 
 // 各种操作的延迟时间(毫秒)                             
