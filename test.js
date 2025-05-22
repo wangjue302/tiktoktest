@@ -28,17 +28,16 @@ function main() {
         exit();
     }
 
-    handleVideoInteraction();
-    // let retryCount = 0;
-    // while (retryCount++ < MAX_RETRY) {
-    //     handleVideoInteraction();
+    let retryCount = 0;
+    while (retryCount++ < MAX_RETRY) {
+        handleVideoInteraction();
         
-    //     // 滑动到下一个视频
-    //     swipeToNextVideo();
-    // }
+        // 滑动到下一个视频
+        swipeToNextVideo();
+    }
     
-    // toast("脚本执行完成");
-    // exit();
+    toast("脚本执行完成");
+    exit();
 }
 
 
@@ -52,20 +51,20 @@ function handleVideoInteraction() {
     sleep(DELAY.OPEN_COMMENT);
     
     // 检查是否有评论
-    // if (checkCommentsExist()) {
-    //     toast("检测到评论，点击第一条评论用户");
-    //     clickFirstCommentAvatar();
+    if (checkCommentsExist()) {
+        toast("检测到评论，点击第一条评论用户");
+        clickFirstCommentAvatar();
 
-    //     // 等待用户主页加载
-    //     sleep(3000);
+        // 等待用户主页加载
+        sleep(3000);
         
-    //     // 返回视频页面
-    //     back();
-    //     sleep(DELAY.CLOSE_COMMENT);
-    // } else {
-    //     toast("没有评论，关闭评论区");
-    //     closeCommentSection();
-    // }
+        // 返回视频页面
+        back();
+        sleep(DELAY.CLOSE_COMMENT);
+    } else {
+        toast("没有评论，关闭评论区");
+        closeCommentSection();
+    }
 }
 
 // ====== 操作函数 ======
@@ -96,7 +95,6 @@ function openCommentSection() {
     commentBtn = id("cno").findOne(DELAY.FIND_ELEMENT);
 
     if (commentBtn) {
-        // click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
         commentBtn.click()
         return true;
     }
@@ -107,6 +105,7 @@ function openCommentSection() {
 // 查找评论列表容器
 function checkCommentsExist() {
     const commentList = className("android.widget.FrameLayout").find(DELAY.FIND_ELEMENT);
+    console.log(commentList);
     if (!commentList) return false;
     
     // 查找评论项
@@ -122,7 +121,6 @@ function clickFirstCommentAvatar() {
         .findOne(DELAY.FIND_ELEMENT);
     
     if (firstAvatar) {
-        // click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
         firstAvatar.click();
         return true;
     }
