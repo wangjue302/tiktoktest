@@ -145,6 +145,6 @@ function swipeToNextVideo() {
 }
 
 // ====== 工具函数 ======
-function click(x, y) {
-    press(x, y, 50);
-}
+// function click(x, y) {
+//     press(x, y, 50);
+// }
