@@ -105,7 +105,7 @@ function openCommentSection() {
 
 // 查找评论列表容器
 function checkCommentsExist() {
-    const commentList = className("android.widget.FrameLayout").find(2000);
+    const commentList = className("android.widget.FrameLayout").find(DELAY.FIND_ELEMENT);
 
     console.show("评论列表:", commentList);
     if (!commentList) return false;
@@ -120,7 +120,7 @@ function clickFirstCommentAvatar() {
     const firstAvatar = className("ImageView")
         .depth(10)
         .filter(v => v.bounds().width() > 30 && v.bounds().height() > 30)
-        .findOne(2000);
+        .findOne(DELAY.FIND_ELEMENT);
     
     if (firstAvatar) {
         // click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
