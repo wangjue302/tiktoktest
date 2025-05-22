@@ -105,7 +105,7 @@ function openCommentSection() {
 function checkCommentsExist() {
     const commentList = className("android.widget.FrameLayout").find(2000);
 
-    console.log("评论列表:", commentList);
+    console.show("评论列表:", commentList);
     if (!commentList) return false;
     
     // 查找评论项
