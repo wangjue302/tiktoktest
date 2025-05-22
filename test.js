@@ -1,4 +1,19 @@
-const config = require('./config.js');
+// ====== 配置部分 ======
+// TikTok包名
+const TIKTOK_PACKAGE = "com.zhiliaoapp.musically"; 
+
+// 最大重试次数 
+const MAX_RETRY = 3;
+
+// 各种操作的延迟时间(毫秒)                             
+const DELAY = {                                    
+    LAUNCH_APP: 5000,
+    FIND_ELEMENT: 2000,
+    LOAD_VIDEO: 3000,
+    OPEN_COMMENT: 3000,
+    CLOSE_COMMENT: 1000,
+    SWIPE_VIDEO: 2000
+};
 
 // ====== 主流程 ======
 main();
@@ -8,13 +23,13 @@ function main() {
     if (!prepareEnvironment()) return false;
     
     // 启动TikTok
-    if (!launchApp(config.TIKTOK_PACKAGE)) {
+    if (!launchApp(TIKTOK_PACKAGE)) {
         toast("启动TikTok失败");
         exit();
     }
     
     let retryCount = 0;
-    while (retryCount++ < config.MAX_RETRY) {
+    while (retryCount++ < MAX_RETRY) {
         handleVideoInteraction();
         
         // 滑动到下一个视频
@@ -33,7 +48,7 @@ function handleVideoInteraction() {
         return;
     }
     
-    sleep(config.DELAY.OPEN_COMMENT);
+    sleep(DELAY.OPEN_COMMENT);
     
     // 检查是否有评论
     if (checkCommentsExist()) {
@@ -43,7 +58,7 @@ function handleVideoInteraction() {
         
         // 返回视频页面
         back();
-        sleep(config.DELAY.CLOSE_COMMENT);
+        sleep(DELAY.CLOSE_COMMENT);
     } else {
         toast("没有评论，关闭评论区");
         closeCommentSection();
@@ -69,13 +84,13 @@ function launchApp(packageName) {
     
     app.launch(packageName);
     toast("正在打开TikTok");
-    sleep(config.DELAY.LAUNCH_APP);
+    sleep(DELAY.LAUNCH_APP);
     return currentPackage() === packageName;
 }
 
 // 打开评论区
 function openCommentSection() {
-    commentBtn = idContains("cok").findOne(config.DELAY.FIND_ELEMENT);
+    commentBtn = idContains("cok").findOne(DELAY.FIND_ELEMENT);
     if (commentBtn) {
         click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
         return true;
@@ -111,7 +126,7 @@ function clickFirstCommentAvatar() {
 // 返回
 function closeCommentSection() {
     back();
-    sleep(config.DELAY.CLOSE_COMMENT);
+    sleep(DELAY.CLOSE_COMMENT);
 }
 
 // 滑动到下一个视频
@@ -122,7 +137,7 @@ function swipeToNextVideo() {
     
     swipe(width / 2, startY, width / 2, endY, 500);
     toast("滑动到下一个视频");
-    sleep(config.DELAY.SWIPE_VIDEO);
+    sleep(DELAY.SWIPE_VIDEO);
 }
 
 // ====== 工具函数 ======
