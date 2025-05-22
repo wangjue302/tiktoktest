@@ -10,7 +10,7 @@ const tiktokPackageName = "com.zhiliaoapp.musically"; // 国际版TikTok的包�
 launchTikTok();
 
 // 启动TikTok应用
-const launchTikTok = () => {
+function launchTikTok() {
     // 检查TikTok是否已安装
     if (!getAppName(tiktokPackageName)) {
         toast("未找到TikTok应用");
@@ -41,7 +41,7 @@ const launchTikTok = () => {
     }
 }
 
-const findCommentButton = () => {
+function findCommentButton() {
     commentBtn = descContains("评论").findOne(3000);
     if (commentBtn) return commentBtn;
     
