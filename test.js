@@ -51,20 +51,20 @@ function handleVideoInteraction() {
     sleep(DELAY.OPEN_COMMENT);
     
     // 检查是否有评论
-    if (checkCommentsExist()) {
-        toast("检测到评论，点击第一条评论用户");
-        clickFirstCommentAvatar();
+    // if (checkCommentsExist()) {
+    //     toast("检测到评论，点击第一条评论用户");
+    //     clickFirstCommentAvatar();
 
-        // 等待用户主页加载
-        sleep(3000);
+    //     // 等待用户主页加载
+    //     sleep(3000);
         
-        // 返回视频页面
-        back();
-        sleep(DELAY.CLOSE_COMMENT);
-    } else {
-        toast("没有评论，关闭评论区");
-        closeCommentSection();
-    }
+    //     // 返回视频页面
+    //     back();
+    //     sleep(DELAY.CLOSE_COMMENT);
+    // } else {
+    //     toast("没有评论，关闭评论区");
+    //     closeCommentSection();
+    // }
 }
 
 // ====== 操作函数 ======
@@ -144,8 +144,3 @@ function swipeToNextVideo() {
     toast("滑动到下一个视频");
     sleep(DELAY.SWIPE_VIDEO);
 }
-
-// ====== 工具函数 ======
-// function click(x, y) {
-//     press(x, y, 50);
-// }
