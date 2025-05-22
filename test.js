@@ -27,6 +27,8 @@ function main() {
         toast("启动TikTok失败");
         exit();
     }
+
+    console.show();
     handleVideoInteraction();
     // let retryCount = 0;
     // while (retryCount++ < MAX_RETRY) {
