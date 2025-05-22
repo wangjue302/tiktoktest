@@ -1,63 +1,131 @@
 const config = require('./config.js');
 
-// 检查是否授予了必要的权限
-if (!requestScreenCapture()) {
-    toast("请授予屏幕捕获权限");
+// ====== 主流程 ======
+main();
+
+function main() {
+    // 检查权限
+    if (!prepareEnvironment()) return false;
+    
+    // 启动TikTok
+    if (!launchApp(config.TIKTOK_PACKAGE)) {
+        toast("启动TikTok失败");
+        exit();
+    }
+    
+    let retryCount = 0;
+    while (retryCount++ < config.MAX_RETRY) {
+        handleVideoInteraction();
+        
+        // 滑动到下一个视频
+        swipeToNextVideo();
+    }
+    
+    toast("脚本执行完成");
     exit();
 }
 
-launchTikTok();
 
-// 启动TikTok应用
-function launchTikTok() {
-    // 检查TikTok是否已安装
-    if (!getAppName(config.TIKTOK_PACKAGE)) {
+// ====== 评论区核心功能函数 ======
+function handleVideoInteraction() {
+    if (!openCommentSection()) {
+        toast("无法打开评论区");
+        return;
+    }
+    
+    sleep(config.DELAY.OPEN_COMMENT);
+    
+    // 检查是否有评论
+    if (checkCommentsExist()) {
+        toast("检测到评论，点击第一条评论头像");
+        clickFirstCommentAvatar();
+        sleep(3000);  // 等待用户主页加载
+        
+        // 返回视频页面
+        back();
+        sleep(config.DELAY.CLOSE_COMMENT);
+    } else {
+        toast("没有评论，关闭评论区");
+        closeCommentSection();
+    }
+}
+
+// ====== 操作函数 ======
+// 屏幕捕获权限
+function prepareEnvironment() {
+    if (!requestScreenCapture()) {
+        toast("请授予屏幕捕获权限");
+        return false;
+    }
+    return true;
+}
+
+// 获取应用包名
+function launchApp(packageName) {
+    if (!getAppName(packageName)) {
         toast("未找到TikTok应用");
         return false;
     }
     
-    // 尝试通过包名启动
+    app.launch(packageName);
     toast("正在打开TikTok");
-    app.launch(config.TIKTOK_PACKAGE);
-    
-    // 等待应用打开
     sleep(config.DELAY.LAUNCH_APP);
-    
-    // 检查是否成功打开
-    if (currentPackage() !== config.TIKTOK_PACKAGE) {
-        toast("打开TikTok失败");
-        return false;
-    }
-
-    // let retryCount = 0;
-    // while (retryCount++ < config.MAX_RETRY) {
-    //     handleVideoInteraction();
-        
-    //     // 滑动到下一个视频
-    //     swipeToNextVideo();
-    // }
-    
-    // toast("脚本执行完成");
-
-
-
-
-
-
-    const commentBtn = findCommentButton();
-    if (commentBtn) {
-        click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
-        toast("正在打开评论区");
-        sleep(config.DELAY.OPEN_COMMENT);
-    } else {
-        toast("未找到评论按钮");
-    }
+    return currentPackage() === packageName;
 }
 
-// 查找并点击评论按钮
-function findCommentButton() {
+// 打开评论区
+function openCommentSection() {
     commentBtn = idContains("cok").findOne(config.DELAY.FIND_ELEMENT);
-    if (commentBtn) return commentBtn;
+    if (commentBtn) {
+        click(commentBtn.bounds().centerX(), commentBtn.bounds().centerY());
+        return true;
+    }
     
     return null;
+}
+
+// 查找评论列表容器
+function checkCommentsExist() {
+    const commentList = className("android.widget.RecyclerView").findOne(2000);
+    if (!commentList) return false;
+    
+    // 查找评论项
+    const comments = commentList.children();
+    return comments && comments.length > 0;
+}
+
+// 查找第一个评论头像
+function clickFirstCommentAvatar() {
+    const firstAvatar = className("ImageView")
+        .depth(10)
+        .filter(v => v.bounds().width() > 30 && v.bounds().height() > 30)
+        .findOne(2000);
+    
+    if (firstAvatar) {
+        click(firstAvatar.bounds().centerX(), firstAvatar.bounds().centerY());
+        return true;
+    }
+    return false;
+}
+
+// 返回
+function closeCommentSection() {
+    back();
+    sleep(config.DELAY.CLOSE_COMMENT);
+}
+
+// 滑动到下一个视频
+function swipeToNextVideo() {
+    const { width, height } = device;
+    const startY = height * 0.8;
+    const endY = height * 0.2;
+    
+    swipe(width / 2, startY, width / 2, endY, 500);
+    toast("滑动到下一个视频");
+    sleep(config.DELAY.SWIPE_VIDEO);
+}
+
+// ====== 工具函数 ======
+function click(x, y) {
+    press(x, y, 50);
 }
