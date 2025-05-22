@@ -13,7 +13,7 @@ const DELAY = {
     OPEN_COMMENT: 3000,
     CLOSE_COMMENT: 1000,
     SWIPE_VIDEO: 2000
-};
+}; 
 
 // ====== 主流程 ======
 main();
