@@ -106,7 +106,6 @@ function openCommentSection() {
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-    console.log(commentAvatar);
     
     if (AVATAR_CLICK_COUNT >= commentAvatar.length) {
         toast("已点击所有用户");
@@ -115,42 +114,63 @@ function clickMessageButtonRecursively() {
         return false;
     }
 
-    toast("点击第" + AVATAR_CLICK_COUNT + "个用户头像");
+    while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
+        // 滑动直到元素进入可视区域
+    }
+
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
-    if (avatarBounds) {
-        click(avatarBounds.centerX(), avatarBounds.centerY());
-        sleep(DELAY.WAIT_LOAD);
-
-        // 通过textContains("Message")获取到的元素的clickable属性是false
-        const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
-
-        if (messageButton) {
-            // 向上查找可点击的父元素
-            let clickableButtonParent = messageButton;
-            while (clickableButtonParent && !clickableButtonParent.clickable()) {
-                clickableButtonParent = clickableButtonParent.parent();
-            }
-
-            const buttonBounds = clickableButtonParent.bounds();
-
-            click(buttonBounds.centerX(), buttonBounds.centerY());
-            sleep(DELAY.WAIT_LOAD);
-
-            closeAndBack();
-            closeAndBack();
-        } else {
-            toast("未获取到消息按钮");
-            closeAndBack();
-            sleep(DELAY.WAIT_LOAD);
-        }
-
-        AVATAR_CLICK_COUNT += 2;
-        sleep(DELAY.WAIT_LOAD);
-        clickMessageButtonRecursively();
-    } else {
+    if (!avatarBounds) {
         toast("未获取到头像控件坐标");
         closeAndBack();
+        return false;
     }
+
+    click(avatarBounds.centerX(), avatarBounds.centerY());
+    sleep(DELAY.WAIT_LOAD);
+
+    // 通过textContains("Message")获取到的元素的clickable属性是false
+    const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
+
+    if (messageButton) {
+        // 向上查找可点击的父元素
+        let clickableButtonParent = messageButton;
+        while (clickableButtonParent && !clickableButtonParent.clickable()) {
+            clickableButtonParent = clickableButtonParent.parent();
+        }
+
+        const buttonBounds = clickableButtonParent.bounds();
+
+        click(buttonBounds.centerX(), buttonBounds.centerY());
+        sleep(DELAY.WAIT_LOAD);
+
+        closeAndBack();
+        closeAndBack();
+    } else {
+        toast("未获取到消息按钮");
+        closeAndBack();
+        sleep(DELAY.WAIT_LOAD);
+    }
+
+    AVATAR_CLICK_COUNT += 2;
+    sleep(DELAY.WAIT_LOAD);
+    clickMessageButtonRecursively();
+}
+
+// 判断用户头像是否超出可视范围
+function ensureAvatarVisible(avatar) {
+    const bounds = avatar.bounds();
+    const topY = bounds.top;
+    const bottomY = bounds.bottom;
+    const screenHeight = device.height;
+
+    if (topY >= 0 && bottomY <= screenHeight) {
+        return true; // 在屏幕内
+    }
+
+    // 超出屏幕，滑动一次（可按实际高度调整滑动距离）
+    swipe(device.width / 2, device.height * 0.75, device.width / 2, device.height * 0.25, 500);
+    sleep(500);
+    return false;
 }
 
 // 返回
