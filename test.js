@@ -143,7 +143,7 @@ function clickMessageButtonRecursively() {
             sleep(DELAY.WAIT_LOAD);
         }
 
-        AVATAR_CLICK_COUNT++;
+        AVATAR_CLICK_COUNT += 2;
         sleep(DELAY.WAIT_LOAD);
         clickMessageButtonRecursively();
     } else {
