@@ -111,6 +111,7 @@ function clickMessageButtonRecursively() {
     if (avatarBounds) {
         click(avatarBounds.centerX(), avatarBounds.centerY());
         sleep(DELAY.WAIT_LOAD);
+        AVATAR_CLICK_COUNT++;
 
         // 通过textContains("Message")获取到的元素的clickable属性是false
         const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
@@ -126,7 +127,6 @@ function clickMessageButtonRecursively() {
 
             click(buttonBounds.centerX(), buttonBounds.centerY());
             // sleep(DELAY.WAIT_LOAD);
-            AVATAR_CLICK_COUNT++;
 
             sleep(2000)
             closeAndBack();
@@ -136,7 +136,7 @@ function clickMessageButtonRecursively() {
             toast("未获取到消息按钮");
             closeAndBack();
             sleep(DELAY.WAIT_LOAD);
-            AVATAR_CLICK_COUNT++;
+            
             if (AVATAR_CLICK_COUNT < commentAvatar.length) {
                 clickMessageButtonRecursively();
             } else {
