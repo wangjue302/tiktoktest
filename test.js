@@ -106,7 +106,9 @@ function openCommentSection() {
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-        
+    
+    console.show(AVATAR_CLICK_COUNT)
+
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (avatarBounds) {
         click(avatarBounds.centerX(), avatarBounds.centerY());
@@ -136,7 +138,7 @@ function clickMessageButtonRecursively() {
             toast("未获取到消息按钮");
             closeAndBack();
             sleep(DELAY.WAIT_LOAD);
-            
+
             if (AVATAR_CLICK_COUNT < commentAvatar.length) {
                 clickMessageButtonRecursively();
             } else {
