@@ -131,9 +131,8 @@ function clickMessageButtonRecursively() {
             const buttonBounds = clickableButtonParent.bounds();
 
             click(buttonBounds.centerX(), buttonBounds.centerY());
-            // sleep(DELAY.WAIT_LOAD);
+            sleep(DELAY.WAIT_LOAD);
 
-            sleep(2000)
             closeAndBack();
             closeAndBack();
         } else {
@@ -143,6 +142,7 @@ function clickMessageButtonRecursively() {
         }
 
         AVATAR_CLICK_COUNT++;
+        sleep(DELAY.WAIT_LOAD);
         clickMessageButtonRecursively();
     } else {
         toast("未获取到头像控件坐标");
