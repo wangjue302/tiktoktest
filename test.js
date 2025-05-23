@@ -19,7 +19,7 @@ const DELAY = {
     SWIPE_VIDEO: 2000
 }; 
 
-// ====== 主流程2 ====== 
+// ====== 主流程3 ====== 
 main();
 
 function main() {
