@@ -114,9 +114,9 @@ function clickMessageButtonRecursively() {
         return false;
     }
 
-    // while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
-    //     // 滑动直到元素进入可视区域1  
-    // }
+    while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
+        // 滑动直到元素进入可视区域1  
+    }
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
@@ -153,46 +153,22 @@ function clickMessageButtonRecursively() {
 
     AVATAR_CLICK_COUNT += 2;
     sleep(DELAY.WAIT_LOAD);
-    clickMessageButtonRecursively();
-
-    const commentTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
-    const commentBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
-    swipe(
-        device.width / 2,
-        commentBottom.bounds().top - 10,
-        device.width / 2,
-        commentTop.bounds().bottom + 10,
-        500
-    );
+    clickMessageButtonRecursively(); 
 }
 
 // 判断用户头像是否超出可视范围
 function ensureAvatarVisible(avatar) {
     const bounds = avatar.bounds();
-
-    if (bounds.top >= 0 && bounds.bottom <= device.height) {
+    // 只要头像有一部分在屏幕内就算可见
+    if (bounds.bottom > 0 && bounds.top < device.height) {
         toast("用户头像在屏幕内");
-        return true; // 在屏幕内
+        return true;
     }
 
     toast("用户头像在屏幕外，开始滑动");
-    const commentList = className("androidx.recyclerview.widget.RecyclerView").findOne(1000);
-
-    console.log(commentList);
-    if (commentList) {
-        const listBounds = commentList.bounds();
-        commentList.swipe(
-            listBounds.centerX(),
-            listBounds.bottom - 50,
-            listBounds.centerX(),
-            listBounds.top + 50,
-            500
-        );
-        sleep(500); 
-    } else {
-        toast("未找到评论列表容器");
-    }
-    return false; // 在屏幕外2
+    swipe(device.width / 2, device.height * 0.7, device.width / 2, device.height * 0.3, 500);
+    sleep(500);
+    return false;
 }
 
 // 返回
