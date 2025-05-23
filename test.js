@@ -182,6 +182,7 @@ function ensureAvatarVisible(avatar) {
     } else {
         toast("未找到评论列表容器");
     }
+    return false; // 在屏幕外
 }
 
 // 返回
