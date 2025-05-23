@@ -63,7 +63,7 @@ function handleVideoInteraction() {
             click(bounds.centerX(), bounds.centerY());
             sleep(2000);
 
-            const messageButton = descContains("Message").findOne(DELAY.FIND_ELEMENT);
+            const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
             console.log("messageButton", messageButton); 
             // if (messageButton) {
             //     messageButton.click();
