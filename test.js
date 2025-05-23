@@ -61,21 +61,34 @@ function handleVideoInteraction() {
             sleep(1000);
             let clickCount = 0;
             toast("尝试点击第" + (clickCount + 1) + "个评论头像");
-            
+            let clicked = false;
             // 优先尝试父控件点击
             if (commentAvatar[clickCount].parent() && commentAvatar[clickCount].parent().clickable()) {
-                commentAvatar[clickCount].parent().click();
+                clicked = commentAvatar[clickCount].parent().click();
                 toast("已点击父控件");
             } else if (commentAvatar[clickCount].clickable()) {
-                commentAvatar[clickCount].click();
+                clicked = commentAvatar[clickCount].click();
                 toast("已点击头像控件");
             } else {
-                // 使用坐标点击
+                // 使用坐标点击，前先判断 bounds 有效性
                 let bounds = commentAvatar[clickCount].bounds();
-                click(bounds.centerX(), bounds.centerY());
-                toast("已通过坐标点击头像");
+                if (bounds && typeof bounds.centerX === 'function' && typeof bounds.centerY === 'function') {
+                    let x = bounds.centerX();
+                    let y = bounds.centerY();
+                    if (typeof x === 'number' && typeof y === 'number') {
+                        click(x, y);
+                        toast("已通过坐标点击头像");
+                        clicked = true;
+                    } else {
+                        toast("头像坐标无效，无法点击");
+                    }
+                } else {
+                    toast("未获取到头像控件的有效 bounds");
+                }
             }
-            sleep(2000); // 等待跳转
+            if (clicked) {
+                sleep(2000); // 等待跳转
+            }
         } else {
             toast("未找到评论头像");
         }
