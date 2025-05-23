@@ -52,34 +52,19 @@ function handleVideoInteraction() {
     sleep(DELAY.OPEN_COMMENT);
     
     // 检查是否有评论
-    const commentList = checkCommentsExist();
-    if (commentList) {
-        toast("检测到评论");
+    if (checkCommentsExist()) {
         const commentAvatar = getCommentAvatar();
 
         if (commentAvatar && commentAvatar.length > 0) {
-            sleep(1000);
             let clickCount = 0;
-            let clicked = false;
            
             const bounds = commentAvatar[clickCount].bounds();
-            console.log("头像坐标:", bounds);
-            // if (bounds && typeof bounds.centerX === 'function' && typeof bounds.centerY === 'function') {
-            //     let x = bounds.centerX();
-            //     let y = bounds.centerY();
-            //     if (typeof x === 'number' && typeof y === 'number') {
-            //         click(x, y);
-            //         toast("已通过坐标点击头像");
-            //         clicked = true;
-            //     } else {
-            //         toast("头像坐标无效，无法点击");
-            //     }
-            // } else {
-            //     toast("未获取到头像控件的有效bounds");
-            // }
-            // if (clicked) {
-            //     sleep(2000); // 等待跳转
-            // }
+            if (bounds) {
+                click(bounds.centerX(), bounds.centerY());
+                sleep(2000);
+            } else {
+                toast("未获取到头像控件坐标");
+            }
         } else {
             toast("未找到评论头像");
         }
@@ -129,7 +114,7 @@ function checkCommentsExist() {
     const commentList = className("android.widget.FrameLayout").untilFind();
     if (!commentList) return false;
     
-    return commentList
+    return true
 }
 
 // 查找评论头像
