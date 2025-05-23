@@ -152,20 +152,14 @@ function clickMessageButtonRecursively() {
     }
 
     AVATAR_CLICK_COUNT += 2;
+    sleep(DELAY.WAIT_LOAD);
+    clickMessageButtonRecursively();
 
     const wrapper = commentAvatar[AVATAR_CLICK_COUNT];
     while (commentAvatar[AVATAR_CLICK_COUNT] && !commentAvatar[AVATAR_CLICK_COUNT].scrollable()) {
         wrapper = commentAvatar[AVATAR_CLICK_COUNT].parent();
     }
-    wrapper.swipe(
-        avatarBounds.centerX(),
-        avatarBounds.bottom - 50,
-        avatarBounds.centerX(),
-        avatarBounds.top + 50,
-        500
-    )
-    sleep(DELAY.WAIT_LOAD);
-    clickMessageButtonRecursively();
+    wrapper.scrollForward()
 }
 
 // 判断用户头像是否超出可视范围
