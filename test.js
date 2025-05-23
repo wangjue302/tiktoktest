@@ -81,6 +81,7 @@ function clickVisibleAvatarsAndScroll() {
                 clickedBoundsSet.add(bstr);
                 click(bounds.centerX(), bounds.centerY());
                 sleep(DELAY.WAIT_LOAD);
+                
                 // 进入用户主页后，查找并点击Message按钮
                 const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
                 if (messageButton) {
@@ -112,9 +113,22 @@ function clickVisibleAvatarsAndScroll() {
             toast("评论区头像处理完成");
             break;
         }
-        // 处理完当前屏后，滑动评论区加载新头像
-        swipe(device.width / 2, device.height * 0.7, device.width / 2, device.height * 0.3, 500);
-        sleep(800);
+        // 优化：在评论区容器内部滑动，增大滑动距离
+        let commentContainer = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
+        if (commentContainer) {
+            let cBounds = commentContainer.bounds();
+            swipe(
+                cBounds.centerX(),
+                cBounds.bottom - 30,
+                cBounds.centerX(),
+                cBounds.top + 30,
+                600
+            );
+        } else {
+            // 容器没找到则全屏滑动
+            swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.2, 600);
+        }
+        sleep(1000);
     }
     closeAndBack();
     swipeToNextVideo();
