@@ -126,8 +126,13 @@ function clickMessageButtonRecursively() {
 
             click(buttonBounds.centerX(), buttonBounds.centerY());
             // sleep(DELAY.WAIT_LOAD);
-            sleep(5000)
+            sleep(2000)
             closeAndBack();
+            sleep(2000)
+            closeAndBack();
+            sleep(2000)
+            AVATAR_CLICK_COUNT++;
+            clickMessageButtonRecursively();
         } else {
             toast("未获取到消息按钮");
             closeAndBack();
