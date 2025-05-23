@@ -154,21 +154,6 @@ function clickMessageButtonRecursively() {
     AVATAR_CLICK_COUNT += 2;
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
-
-    const commentList = className("androidx.recyclerview.widget.RecyclerView").findOne(1000);
-    if (commentList) {
-        const listBounds = commentList.bounds();
-        commentList.swipe(
-            listBounds.centerX(),
-            listBounds.bottom - 50,
-            listBounds.centerX(),
-            listBounds.top + 50,
-            500
-        );
-        sleep(500);
-    } else {
-        toast("未找到评论列表容器");
-    }
 }
 
 // 判断用户头像是否超出可视范围
@@ -182,6 +167,8 @@ function ensureAvatarVisible(avatar) {
 
     toast("用户头像在屏幕外，开始滑动");
     const commentList = className("androidx.recyclerview.widget.RecyclerView").findOne(1000);
+
+    console.log(commentList);
     if (commentList) {
         const listBounds = commentList.bounds();
         commentList.swipe(
