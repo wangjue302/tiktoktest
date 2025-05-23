@@ -162,14 +162,56 @@ function launchApp(packageName) {
 
 // 打开评论区
 function openCommentSection() {
-    // 只判断评论按钮是否存在，存在就点击
+    // 查找评论按钮
     let commentBtn = id("cno").findOne(DELAY.FIND_ELEMENT);
-    if (commentBtn) {
-        commentBtn.click();
-        return true;
+    if (!commentBtn) {
+        toast("未找到评论按钮，跳过");
+        return false;
     }
-    toast("未找到评论按钮，跳过");
-    return false;
+    // 查找评论按钮下方的评论数文本
+    let commentCountNode = null;
+    // 尝试获取评论按钮的下一个兄弟节点（常见结构）
+    if (commentBtn.parent()) {
+        let siblings = commentBtn.parent().children();
+        let found = false;
+        for (let i = 0; i < siblings.length; i++) {
+            if (siblings[i].id() === "cno") {
+                // 下一个兄弟节点
+                if (i + 1 < siblings.length) {
+                    commentCountNode = siblings[i + 1];
+                    found = true;
+                    break;
+                }
+            }
+        }
+        // 如果没找到，尝试直接找 parent 下的 text 节点
+        if (!found) {
+            for (let i = 0; i < siblings.length; i++) {
+                if (siblings[i].text() && /\d/.test(siblings[i].text())) {
+                    commentCountNode = siblings[i];
+                    break;
+                }
+            }
+        }
+    }
+    // 解析评论数
+    let count = 0;
+    if (commentCountNode && commentCountNode.text()) {
+        let text = commentCountNode.text().replace(/[^\d\.Kk万]/g, "");
+        if (/K|k/.test(text)) {
+            count = parseFloat(text) * 1000;
+        } else if (/万/.test(text)) {
+            count = parseFloat(text) * 10000;
+        } else {
+            count = parseInt(text);
+        }
+    }
+    if (!count || isNaN(count) || count === 0) {
+        toast("无评论，跳过");
+        return false;
+    }
+    commentBtn.click();
+    return true;
 }
 
 // 评论区用户点击递归方法
