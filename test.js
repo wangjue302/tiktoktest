@@ -115,7 +115,7 @@ function clickMessageButtonRecursively() {
     }
 
     while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
-        // 滑动直到元素进入可视区域
+        // 滑动直到元素进入可视区域  
     }
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
