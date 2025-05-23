@@ -60,35 +60,26 @@ function handleVideoInteraction() {
         if (commentAvatar && commentAvatar.length > 0) {
             sleep(1000);
             let clickCount = 0;
-            toast("尝试点击第" + (clickCount + 1) + "个评论头像");
             let clicked = false;
-            // 优先尝试父控件点击
-            if (commentAvatar[clickCount].parent() && commentAvatar[clickCount].parent().clickable()) {
-                clicked = commentAvatar[clickCount].parent().click();
-                toast("已点击父控件");
-            } else if (commentAvatar[clickCount].clickable()) {
-                clicked = commentAvatar[clickCount].click();
-                toast("已点击头像控件");
-            } else {
-                // 使用坐标点击，前先判断 bounds 有效性
-                let bounds = commentAvatar[clickCount].bounds();
-                if (bounds && typeof bounds.centerX === 'function' && typeof bounds.centerY === 'function') {
-                    let x = bounds.centerX();
-                    let y = bounds.centerY();
-                    if (typeof x === 'number' && typeof y === 'number') {
-                        click(x, y);
-                        toast("已通过坐标点击头像");
-                        clicked = true;
-                    } else {
-                        toast("头像坐标无效，无法点击");
-                    }
-                } else {
-                    toast("未获取到头像控件的有效 bounds");
-                }
-            }
-            if (clicked) {
-                sleep(2000); // 等待跳转
-            }
+           
+            const bounds = commentAvatar[clickCount].bounds();
+            console.log("头像坐标:", bounds);
+            // if (bounds && typeof bounds.centerX === 'function' && typeof bounds.centerY === 'function') {
+            //     let x = bounds.centerX();
+            //     let y = bounds.centerY();
+            //     if (typeof x === 'number' && typeof y === 'number') {
+            //         click(x, y);
+            //         toast("已通过坐标点击头像");
+            //         clicked = true;
+            //     } else {
+            //         toast("头像坐标无效，无法点击");
+            //     }
+            // } else {
+            //     toast("未获取到头像控件的有效bounds");
+            // }
+            // if (clicked) {
+            //     sleep(2000); // 等待跳转
+            // }
         } else {
             toast("未找到评论头像");
         }
