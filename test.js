@@ -19,7 +19,7 @@ const DELAY = {
     SWIPE_VIDEO: 2000
 }; 
 
-// ====== 主流程5 ====== 
+// ====== 主流程1 ====== 
 main();
 
 function main() {
@@ -55,86 +55,7 @@ function handleVideoInteraction() {
     }
 
     sleep(DELAY.OPEN);
-    clickVisibleAvatarsAndScroll();
-}
-
-// 处理可视范围内头像并自动滑动
-function clickVisibleAvatarsAndScroll() {
-    let clickedBoundsSet = new Set();
-    let maxScroll = 20; // 最多滑动次数，防止死循环
-    let noNewAvatarCount = 0;
-    let firstTry = true;
-    while (maxScroll-- > 0) {
-        let avatars = className("android.widget.ImageView").depth(19).untilFind();
-        if (firstTry && avatars.length === 0) {
-            toast("评论区无用户头像，直接退出");
-            closeAndBack();
-            swipeToNextVideo();
-            return;
-        }
-        firstTry = false;
-        let hasNew = false;
-        for (let i = 0; i < avatars.length; i += 2) {
-            let avatar = avatars[i];
-            let bounds = avatar.bounds();
-            if (!bounds) continue;
-            let bstr = bounds.toString();
-            if (!clickedBoundsSet.has(bstr)) {
-                hasNew = true;
-                clickedBoundsSet.add(bstr);
-                click(bounds.centerX(), bounds.centerY());
-                sleep(DELAY.WAIT_LOAD);
-                
-                // 进入用户主页后，查找并点击Message按钮
-                const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
-                if (messageButton) {
-                    let clickableButtonParent = messageButton;
-                    while (clickableButtonParent && !clickableButtonParent.clickable()) {
-                        clickableButtonParent = clickableButtonParent.parent();
-                    }
-                    if (clickableButtonParent) {
-                        let buttonBounds = clickableButtonParent.bounds();
-                        click(buttonBounds.centerX(), buttonBounds.centerY());
-                        sleep(DELAY.WAIT_LOAD);
-                    }
-                    closeAndBack();
-                    closeAndBack();
-                } else {
-                    toast("未获取到消息按钮");
-                    closeAndBack();
-                    sleep(DELAY.WAIT_LOAD);
-                }
-            }
-        }
-        if (!hasNew) {
-            noNewAvatarCount++;
-        } else {
-            noNewAvatarCount = 0;
-        }
-        // 连续两次滑动都没有新头像，说明到底了
-        if (noNewAvatarCount >= 2) {
-            toast("评论区头像处理完成");
-            break;
-        }
-        // 优化：在评论区容器内部滑动，增大滑动距离
-        let commentContainer = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
-        if (commentContainer) {
-            let cBounds = commentContainer.bounds();
-            swipe(
-                cBounds.centerX(),
-                cBounds.bottom - 30,
-                cBounds.centerX(),
-                cBounds.top + 30,
-                500
-            );
-        } else {
-            // 容器没找到则全屏滑动
-            swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.2, 600);
-        }
-        sleep(2000);
-    }
-    closeAndBack();
-    swipeToNextVideo();
+    clickMessageButtonRecursively();
 }
 
 // ====== 操作函数 ======
