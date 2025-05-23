@@ -106,6 +106,7 @@ function openCommentSection() {
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+    console.log("获取到的评论用户数量: " + commentAvatar);
     
     if (AVATAR_CLICK_COUNT >= commentAvatar.length) {
         toast("已点击所有用户");
