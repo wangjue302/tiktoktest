@@ -64,8 +64,15 @@ function handleVideoInteraction() {
             sleep(2000);
 
             const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
+
             if (messageButton) {
-                const buttonBounds = messageButton.bounds();
+                // 向上查找可点击的父元素
+                let clickableButtonParent = messageButton;
+                while (clickableButtonParent && !clickableButtonParent.clickable()) {
+                    clickableButtonParent = clickableButtonParent.parent();
+                }
+
+                const buttonBounds = clickableButtonParent.bounds();
 
                 click(buttonBounds.centerX(), buttonBounds.centerY());
                 sleep(DELAY.WAIT_LOAD);
