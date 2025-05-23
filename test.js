@@ -107,7 +107,7 @@ function clickMessageButtonRecursively() {
     // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
     
-    console.show(AVATAR_CLICK_COUNT)
+    console.log('点击顺序：', AVATAR_CLICK_COUNT)
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (avatarBounds) {
