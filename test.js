@@ -59,7 +59,6 @@ function handleVideoInteraction() {
 
         let clickCount = 0;
         commentAvatar[clickCount].click();
-        console.show(commentAvatar[clickCount])
 
         // 等待用户主页加载
         sleep(3000);
@@ -118,7 +117,7 @@ function checkCommentsExist() {
 
 // 查找评论头像
 function getCommentAvatar() {
-    const commentAvatar = className("android.widget.ImageView").untilFind();
+    const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
     if (!commentAvatar) return false;
     
     return commentAvatar
