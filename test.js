@@ -52,19 +52,66 @@ function handleVideoInteraction() {
         toast("无法打开评论区");
         return;
     }
-    
     sleep(DELAY.OPEN);
-
-    // 获取评论列表
     const commentList = className("android.widget.FrameLayout").untilFind();
-    
     if (commentList) {
-        clickMessageButtonRecursively()
+        clickVisibleAvatarsAndScroll();
     } else {
         toast("没有评论，关闭评论区");
         closeAndBack();
         swipeToNextVideo();
     }
+}
+
+// 处理可视范围内头像并自动滑动
+function clickVisibleAvatarsAndScroll() {
+    let lastBoundsList = [];
+    let maxScroll = 20; // 最多滑动次数，防止死循环
+    while (maxScroll-- > 0) {
+        // 获取可视范围内头像
+        let avatars = className("android.widget.ImageView").depth(19).untilFind();
+        // 用 bounds 字符串去重，避免重复点击
+        let boundsList = avatars.map(a => a.bounds().toString());
+        // 如果和上一屏一样，说明到底了
+        if (JSON.stringify(boundsList) === JSON.stringify(lastBoundsList)) {
+            toast("已处理所有可见头像");
+            break;
+        }
+        lastBoundsList = boundsList;
+        // 依次点击头像（可根据需求调整步长）
+        for (let i = 0; i < avatars.length; i += 2) {
+            let avatar = avatars[i];
+            let bounds = avatar.bounds();
+            if (!bounds) continue;
+            click(bounds.centerX(), bounds.centerY());
+            sleep(DELAY.WAIT_LOAD);
+            // 进入用户主页后，查找并点击Message按钮
+            const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
+            if (messageButton) {
+                let clickableButtonParent = messageButton;
+                while (clickableButtonParent && !clickableButtonParent.clickable()) {
+                    clickableButtonParent = clickableButtonParent.parent();
+                }
+                if (clickableButtonParent) {
+                    let buttonBounds = clickableButtonParent.bounds();
+                    click(buttonBounds.centerX(), buttonBounds.centerY());
+                    sleep(DELAY.WAIT_LOAD);
+                }
+                closeAndBack();
+                closeAndBack();
+            } else {
+                toast("未获取到消息按钮");
+                closeAndBack();
+                sleep(DELAY.WAIT_LOAD);
+            }
+        }
+        // 处理完当前屏后，滑动评论区加载新头像
+        swipe(device.width / 2, device.height * 0.7, device.width / 2, device.height * 0.3, 500);
+        sleep(800);
+    }
+    toast("评论区头像处理完成");
+    closeAndBack();
+    swipeToNextVideo();
 }
 
 // ====== 操作函数 ======
@@ -154,21 +201,6 @@ function clickMessageButtonRecursively() {
     AVATAR_CLICK_COUNT += 2;
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
-}
-
-// 判断用户头像是否超出可视范围
-function ensureAvatarVisible(avatar) {
-    const bounds = avatar.bounds();
-    // 只要头像有一部分在屏幕内就算可见
-    if (bounds.bottom > 0 && bounds.top < device.height) {
-        toast("用户头像在屏幕内");
-        return true;
-    }
-
-    toast("用户头像在屏幕外，开始滑动");
-    swipe(device.width / 2, device.height * 0.7, device.width / 2, device.height * 0.3, 500);
-    sleep(500);
-    return false;
 }
 
 // 返回
