@@ -28,16 +28,17 @@ function main() {
         exit();
     }
 
-    let retryCount = 0;
-    while (retryCount++ < MAX_RETRY) {
-        handleVideoInteraction();
+    handleVideoInteraction();
+    // let retryCount = 0;
+    // while (retryCount++ < MAX_RETRY) {
+    //     handleVideoInteraction();
         
-        // 滑动到下一个视频
-        swipeToNextVideo();
-    }
+    //     // 滑动到下一个视频
+    //     swipeToNextVideo();
+    // }
     
-    toast("脚本执行完成");
-    exit();
+    // toast("脚本执行完成");
+    // exit();
 }
 
 
@@ -58,6 +59,7 @@ function handleVideoInteraction() {
 
         let clickCount = 0;
         commentAvatar[clickCount].click();
+        console.show(commentAvatar[clickCount])
 
         // 等待用户主页加载
         sleep(3000);
@@ -144,6 +146,7 @@ function getCommentAvatar() {
 function closeCommentSection() {
     back();
     sleep(DELAY.CLOSE_COMMENT);
+    swipeToNextVideo();
 }
 
 // 滑动到下一个视频
