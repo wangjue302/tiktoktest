@@ -8,9 +8,10 @@ const MAX_RETRY = 3;
 // 各种操作的延迟时间(毫秒)                             
 const DELAY = {                                    
     LAUNCH_APP: 5000,
-    FIND_ELEMENT: 2000,
     OPEN: 3000,
     BACK: 1000,
+    FIND_ELEMENT: 2000,
+    WAIT_LOAD: 3000,
     LOAD_VIDEO: 3000,
     SWIPE_VIDEO: 2000
 }; 
@@ -60,17 +61,17 @@ function handleVideoInteraction() {
         const bounds = commentAvatar[clickCount].bounds();
         if (bounds) {
             click(bounds.centerX(), bounds.centerY());
-            sleep(2000);
+            sleep(WAIT_LOAD);
 
             const messageButton = descContains("Message").findOne(DELAY.FIND_ELEMENT);
             console.show("messageButton", messageButton);
-            if (messageButton) {
-                messageButton.click();
-                sleep(DELAY.LOAD_VIDEO);
-            } else {
-                toast("未获取到消息按钮");
-                closeAndBack();
-            }
+            // if (messageButton) {
+            //     messageButton.click();
+            //     sleep(DELAY.LOAD_VIDEO);
+            // } else {
+            //     toast("未获取到消息按钮");
+            //     closeAndBack();
+            // }
         } else {
             toast("未获取到头像控件坐标");
         }
