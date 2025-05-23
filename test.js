@@ -159,16 +159,22 @@ function clickMessageButtonRecursively() {
 // 判断用户头像是否超出可视范围
 function ensureAvatarVisible(avatar) {
     const bounds = avatar.bounds();
-    const topY = bounds.top;
-    const bottomY = bounds.bottom;
-    const screenHeight = device.height;
 
-    if (topY >= 0 && bottomY <= screenHeight) {
+    if (bounds.top >= 0 && bounds.bottom <= device.height) {
         return true; // 在屏幕内
     }
 
-    // 超出屏幕，滑动一次（可按实际高度调整滑动距离）
-    swipe(device.width / 2, device.height * 0.75, device.width / 2, device.height * 0.25, 500);
+    const wrapper = avatar;
+    while (avatar && !avatar.scrollable()) {
+        wrapper = avatar.parent();
+    }
+    wrapper.swipe(
+        avatar.bounds.centerX(),
+        avatar.bounds.bottom - 50,
+        avatar.bounds.centerX(),
+        avatar.bounds.top + 50,
+        500
+    )
     sleep(500);
     return false;
 }
