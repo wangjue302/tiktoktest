@@ -9,9 +9,9 @@ const MAX_RETRY = 3;
 const DELAY = {                                    
     LAUNCH_APP: 5000,
     FIND_ELEMENT: 2000,
+    OPEN: 3000,
+    BACK: 1000,
     LOAD_VIDEO: 3000,
-    OPEN_COMMENT: 3000,
-    CLOSE_COMMENT: 1000,
     SWIPE_VIDEO: 2000
 }; 
 
@@ -49,28 +49,33 @@ function handleVideoInteraction() {
         return;
     }
     
-    sleep(DELAY.OPEN_COMMENT);
+    sleep(DELAY.OPEN);
     
     // 检查是否有评论
     if (checkCommentsExist()) {
         const commentAvatar = getCommentAvatar();
 
-        if (commentAvatar && commentAvatar.length > 0) {
-            let clickCount = 0;
+        let clickCount = 0;
            
-            const bounds = commentAvatar[clickCount].bounds();
-            if (bounds) {
-                click(bounds.centerX(), bounds.centerY());
-                sleep(2000);
+        const bounds = commentAvatar[clickCount].bounds();
+        if (bounds) {
+            click(bounds.centerX(), bounds.centerY());
+            sleep(2000);
+
+            const messageButton = descContains("Message").findOne(DELAY.FIND_ELEMENT);
+            if (messageButton) {
+                messageButton.click();
+                sleep(DELAY.LOAD_VIDEO);
             } else {
-                toast("未获取到头像控件坐标");
+                closeAndBack();
             }
         } else {
-            toast("未找到评论头像");
+            toast("未获取到头像控件坐标");
         }
     } else {
         toast("没有评论，关闭评论区");
-        closeCommentSection();
+        closeAndBack();
+        swipeToNextVideo();
     }
 }
 
@@ -126,10 +131,9 @@ function getCommentAvatar() {
 }
 
 // 返回
-function closeCommentSection() {
+function closeAndBack() {
     back();
-    sleep(DELAY.CLOSE_COMMENT);
-    swipeToNextVideo();
+    sleep(DELAY.BACK);
 }
 
 // 滑动到下一个视频
