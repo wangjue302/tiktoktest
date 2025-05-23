@@ -12,7 +12,7 @@ let AVATAR_CLICK_COUNT = 0;
 const DELAY = {                                    
     LAUNCH_APP: 5000,
     OPEN: 3000,
-    BACK: 1000,
+    BACK: 2000,
     FIND_ELEMENT: 2000,
     WAIT_LOAD: 3000,
     LOAD_VIDEO: 3000,
@@ -123,7 +123,7 @@ function clickVisibleAvatarsAndScroll() {
             // 容器没找到则全屏滑动
             swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.2, 600);
         }
-        sleep(1000);
+        sleep(2000);
     }
     closeAndBack();
     swipeToNextVideo();
