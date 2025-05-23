@@ -5,6 +5,9 @@ const TIKTOK_PACKAGE = "com.zhiliaoapp.musically";
 // 最大重试次数 
 const MAX_RETRY = 3;
 
+// 评论用户头像点击顺序
+let AVATAR_CLICK_COUNT = 0;
+
 // 各种操作的延迟时间(毫秒)                             
 const DELAY = {                                    
     LAUNCH_APP: 5000,
@@ -51,38 +54,12 @@ function handleVideoInteraction() {
     }
     
     sleep(DELAY.OPEN);
+
+    // 获取评论列表
+    const commentList = className("android.widget.FrameLayout").untilFind();
     
-    // 检查是否有评论
-    if (checkCommentsExist()) {
-        const commentAvatar = getCommentAvatar();
-
-        let clickCount = 0;
-           
-        const avatarBounds = commentAvatar[clickCount].bounds();
-        if (avatarBounds) {
-            click(avatarBounds.centerX(), avatarBounds.centerY());
-            sleep(2000);
-
-            const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
-
-            if (messageButton) {
-                // 向上查找可点击的父元素
-                let clickableButtonParent = messageButton;
-                while (clickableButtonParent && !clickableButtonParent.clickable()) {
-                    clickableButtonParent = clickableButtonParent.parent();
-                }
-
-                const buttonBounds = clickableButtonParent.bounds();
-
-                click(buttonBounds.centerX(), buttonBounds.centerY());
-                sleep(DELAY.WAIT_LOAD);
-            } else {
-                toast("未获取到消息按钮");
-                closeAndBack();
-            }
-        } else {
-            toast("未获取到头像控件坐标");
-        }
+    if (commentList) {
+        clickMessageButtonRecursively()
     } else {
         toast("没有评论，关闭评论区");
         closeAndBack();
@@ -125,20 +102,48 @@ function openCommentSection() {
     return null;
 }
 
-// 查找评论列表容器
-function checkCommentsExist() {
-    const commentList = className("android.widget.FrameLayout").untilFind();
-    if (!commentList) return false;
-    
-    return true
-}
-
-// 查找评论头像
-function getCommentAvatar() {
+// 评论区用户点击递归方法
+function clickMessageButtonRecursively() {
+    // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-    if (!commentAvatar) return false;
-    
-    return commentAvatar
+        
+    const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
+    if (avatarBounds) {
+        click(avatarBounds.centerX(), avatarBounds.centerY());
+        sleep(DELAY.WAIT_LOAD);
+
+        // 通过textContains("Message")获取到的元素的clickable属性是false
+        const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
+
+        if (messageButton) {
+            // 向上查找可点击的父元素
+            let clickableButtonParent = messageButton;
+            while (clickableButtonParent && !clickableButtonParent.clickable()) {
+                clickableButtonParent = clickableButtonParent.parent();
+            }
+
+            const buttonBounds = clickableButtonParent.bounds();
+
+            click(buttonBounds.centerX(), buttonBounds.centerY());
+            // sleep(DELAY.WAIT_LOAD);
+            sleep(5000)
+            closeAndBack();
+        } else {
+            toast("未获取到消息按钮");
+            closeAndBack();
+            sleep(DELAY.WAIT_LOAD);
+            AVATAR_CLICK_COUNT++;
+            if (AVATAR_CLICK_COUNT < commentAvatar.length) {
+                clickMessageButtonRecursively();
+            } else {
+                toast("已点击所有用户");
+                closeAndBack();
+            }
+        }
+    } else {
+        toast("未获取到头像控件坐标");
+        closeAndBack();
+    }
 }
 
 // 返回
