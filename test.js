@@ -114,9 +114,9 @@ function clickMessageButtonRecursively() {
         return false;
     }
 
-    while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
-        // 滑动直到元素进入可视区域1  
-    }
+    // while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
+    //     // 滑动直到元素进入可视区域1  
+    // }
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
@@ -154,6 +154,8 @@ function clickMessageButtonRecursively() {
     AVATAR_CLICK_COUNT += 2;
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
+
+    swipe(device.width / 2, device.height * 0.75, device.width / 2, device.height * 0.25, 500);
 }
 
 // 判断用户头像是否超出可视范围
