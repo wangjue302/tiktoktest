@@ -178,7 +178,7 @@ function ensureAvatarVisible(avatar) {
             listBounds.top + 50,
             500
         );
-        sleep(500);
+        sleep(500); 
     } else {
         toast("未找到评论列表容器");
     }
