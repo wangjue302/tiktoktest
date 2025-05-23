@@ -61,7 +61,7 @@ function handleVideoInteraction() {
         const bounds = commentAvatar[clickCount].bounds();
         if (bounds) {
             click(bounds.centerX(), bounds.centerY());
-            sleep(DELAY.WAIT_LOAD);
+            sleep(2000);
 
             const messageButton = descContains("Message").findOne(DELAY.FIND_ELEMENT);
             console.show("messageButton", messageButton);
