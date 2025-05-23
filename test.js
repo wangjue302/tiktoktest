@@ -114,9 +114,9 @@ function clickMessageButtonRecursively() {
         return false;
     }
 
-    while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
-        // 滑动直到元素进入可视区域
-    }
+    // while (!ensureAvatarVisible(commentAvatar[AVATAR_CLICK_COUNT])) {
+    //     // 滑动直到元素进入可视区域
+    // }
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
@@ -152,6 +152,13 @@ function clickMessageButtonRecursively() {
     }
 
     AVATAR_CLICK_COUNT += 2;
+    wrapper.swipe(
+        avatarBounds.centerX(),
+        avatarBounds.bottom - 50,
+        avatarBounds.centerX(),
+        avatarBounds.top + 50,
+        500
+    )
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
 }
