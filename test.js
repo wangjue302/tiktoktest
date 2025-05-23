@@ -128,9 +128,7 @@ function clickMessageButtonRecursively() {
             // sleep(DELAY.WAIT_LOAD);
             sleep(2000)
             closeAndBack();
-            sleep(2000)
             closeAndBack();
-            sleep(2000)
             AVATAR_CLICK_COUNT++;
             clickMessageButtonRecursively();
         } else {
