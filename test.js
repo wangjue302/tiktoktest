@@ -107,13 +107,16 @@ function clickMessageButtonRecursively() {
     // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
     
-    console.log('点击顺序：', AVATAR_CLICK_COUNT)
+    if (AVATAR_CLICK_COUNT >= commentAvatar.length) {
+        toast("已点击所有用户");
+        closeAndBack();
+        return false;
+    }
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (avatarBounds) {
         click(avatarBounds.centerX(), avatarBounds.centerY());
         sleep(DELAY.WAIT_LOAD);
-        AVATAR_CLICK_COUNT++;
 
         // 通过textContains("Message")获取到的元素的clickable属性是false
         const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
@@ -133,19 +136,14 @@ function clickMessageButtonRecursively() {
             sleep(2000)
             closeAndBack();
             closeAndBack();
-            clickMessageButtonRecursively();
         } else {
             toast("未获取到消息按钮");
             closeAndBack();
             sleep(DELAY.WAIT_LOAD);
-
-            if (AVATAR_CLICK_COUNT < commentAvatar.length) {
-                clickMessageButtonRecursively();
-            } else {
-                toast("已点击所有用户");
-                closeAndBack();
-            }
         }
+
+        AVATAR_CLICK_COUNT++;
+        clickMessageButtonRecursively();
     } else {
         toast("未获取到头像控件坐标");
         closeAndBack();
