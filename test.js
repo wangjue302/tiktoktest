@@ -155,7 +155,7 @@ function clickMessageButtonRecursively() {
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
 
-    const wrapper = commentAvatar[AVATAR_CLICK_COUNT];
+    let wrapper = commentAvatar[AVATAR_CLICK_COUNT];
     while (commentAvatar[AVATAR_CLICK_COUNT] && !commentAvatar[AVATAR_CLICK_COUNT].scrollable()) {
         wrapper = commentAvatar[AVATAR_CLICK_COUNT].parent();
     }
