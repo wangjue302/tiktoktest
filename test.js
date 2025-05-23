@@ -155,11 +155,20 @@ function clickMessageButtonRecursively() {
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
 
-    let wrapper = commentAvatar[AVATAR_CLICK_COUNT];
-    while (commentAvatar[AVATAR_CLICK_COUNT] && !commentAvatar[AVATAR_CLICK_COUNT].scrollable()) {
-        wrapper = commentAvatar[AVATAR_CLICK_COUNT].parent();
+    const commentList = className("androidx.recyclerview.widget.RecyclerView").findOne(1000);
+    if (commentList) {
+        const listBounds = commentList.bounds();
+        commentList.swipe(
+            listBounds.centerX(),
+            listBounds.bottom - 50,
+            listBounds.centerX(),
+            listBounds.top + 50,
+            500
+        );
+        sleep(500);
+    } else {
+        toast("未找到评论列表容器");
     }
-    wrapper.scrollForward()
 }
 
 // 判断用户头像是否超出可视范围
@@ -172,19 +181,20 @@ function ensureAvatarVisible(avatar) {
     }
 
     toast("用户头像在屏幕外，开始滑动");
-    const wrapper = avatar;
-    while (avatar && !avatar.scrollable()) {
-        wrapper = avatar.parent();
+    const commentList = className("androidx.recyclerview.widget.RecyclerView").findOne(1000);
+    if (commentList) {
+        const listBounds = commentList.bounds();
+        commentList.swipe(
+            listBounds.centerX(),
+            listBounds.bottom - 50,
+            listBounds.centerX(),
+            listBounds.top + 50,
+            500
+        );
+        sleep(500);
+    } else {
+        toast("未找到评论列表容器");
     }
-    wrapper.swipe(
-        avatar.bounds.centerX(),
-        avatar.bounds.bottom - 50,
-        avatar.bounds.centerX(),
-        avatar.bounds.top + 50,
-        500
-    )
-    sleep(500);
-    return false;
 }
 
 // 返回
