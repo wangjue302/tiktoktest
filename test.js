@@ -110,9 +110,11 @@ function clickMessageButtonRecursively() {
     if (AVATAR_CLICK_COUNT >= commentAvatar.length) {
         toast("已点击所有用户");
         closeAndBack();
+        swipeToNextVideo();
         return false;
     }
 
+    toast("点击第" + AVATAR_CLICK_COUNT + "个用户头像");
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (avatarBounds) {
         click(avatarBounds.centerX(), avatarBounds.centerY());
