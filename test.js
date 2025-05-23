@@ -161,9 +161,11 @@ function ensureAvatarVisible(avatar) {
     const bounds = avatar.bounds();
 
     if (bounds.top >= 0 && bounds.bottom <= device.height) {
+        toast("用户头像在屏幕内");
         return true; // 在屏幕内
     }
 
+    toast("用户头像在屏幕外，开始滑动");
     const wrapper = avatar;
     while (avatar && !avatar.scrollable()) {
         wrapper = avatar.parent();
