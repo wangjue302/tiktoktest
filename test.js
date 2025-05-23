@@ -57,8 +57,28 @@ function handleVideoInteraction() {
         toast("检测到评论");
         const commentAvatar = getCommentAvatar();
 
-        let clickCount = 0;
-        commentAvatar[clickCount].parent().click();
+        if (commentAvatar && commentAvatar.length > 0) {
+            sleep(1000);
+            let clickCount = 0;
+            toast("尝试点击第" + (clickCount + 1) + "个评论头像");
+            
+            // 优先尝试父控件点击
+            if (commentAvatar[clickCount].parent() && commentAvatar[clickCount].parent().clickable()) {
+                commentAvatar[clickCount].parent().click();
+                toast("已点击父控件");
+            } else if (commentAvatar[clickCount].clickable()) {
+                commentAvatar[clickCount].click();
+                toast("已点击头像控件");
+            } else {
+                // 使用坐标点击
+                let bounds = commentAvatar[clickCount].bounds();
+                click(bounds.centerX(), bounds.centerY());
+                toast("已通过坐标点击头像");
+            }
+            sleep(2000); // 等待跳转
+        } else {
+            toast("未找到评论头像");
+        }
     } else {
         toast("没有评论，关闭评论区");
         closeCommentSection();
