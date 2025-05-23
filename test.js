@@ -155,7 +155,15 @@ function clickMessageButtonRecursively() {
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
 
-    swipe(device.width / 2, device.height * 0.75, device.width / 2, device.height * 0.25, 500);
+    const commentTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
+    const commentBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
+    swipe(
+        device.width / 2,
+        commentBottom.bounds().top - 10,
+        device.width / 2,
+        commentTop.bounds().bottom + 10,
+        500
+    );
 }
 
 // 判断用户头像是否超出可视范围
