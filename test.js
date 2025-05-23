@@ -50,17 +50,12 @@ function main() {
 function handleVideoInteraction() {
     if (!openCommentSection()) {
         toast("无法打开评论区");
-        return;
-    }
-    sleep(DELAY.OPEN);
-    const commentList = className("android.widget.FrameLayout").untilFind();
-    if (commentList) {
-        clickVisibleAvatarsAndScroll();
-    } else {
-        toast("没有评论，关闭评论区");
-        closeAndBack();
         swipeToNextVideo();
+        return false;
     }
+
+    sleep(DELAY.OPEN);
+    clickVisibleAvatarsAndScroll();
 }
 
 // 处理可视范围内头像并自动滑动
@@ -159,14 +154,22 @@ function launchApp(packageName) {
 
 // 打开评论区
 function openCommentSection() {
-    commentBtn = id("cno").findOne(DELAY.FIND_ELEMENT);
-
+    // 先查找评论数控件，判断是否有评论
+    let commentCountNode = textMatches(/\d+/).findOne(DELAY.FIND_ELEMENT);
+    if (commentCountNode) {
+        let count = parseInt(commentCountNode.text());
+        if (isNaN(count) || count === 0) {
+            toast("无评论，跳过");
+            return false;
+        }
+    }
+    // 查找评论按钮
+    let commentBtn = id("cno").findOne(DELAY.FIND_ELEMENT);
     if (commentBtn) {
-        commentBtn.click()
+        commentBtn.click();
         return true;
     }
-    
-    return null;
+    return false;
 }
 
 // 评论区用户点击递归方法
