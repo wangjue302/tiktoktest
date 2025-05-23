@@ -11,7 +11,6 @@ let AVATAR_CLICK_COUNT = 0;
 // 各种操作的延迟时间(毫秒)                             
 const DELAY = {                                    
     LAUNCH_APP: 5000,
-    OPEN: 3000,
     BACK: 2000,
     FIND_ELEMENT: 2000,
     WAIT_LOAD: 3000,
@@ -54,7 +53,7 @@ function handleVideoInteraction() {
         return false;
     }
 
-    sleep(DELAY.OPEN);
+    sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively();
 }
 
