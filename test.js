@@ -117,7 +117,7 @@ function clickVisibleAvatarsAndScroll() {
                 cBounds.bottom - 30,
                 cBounds.centerX(),
                 cBounds.top + 30,
-                600
+                500
             );
         } else {
             // 容器没找到则全屏滑动
