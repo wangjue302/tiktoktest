@@ -63,8 +63,16 @@ function clickVisibleAvatarsAndScroll() {
     let clickedBoundsSet = new Set();
     let maxScroll = 20; // 最多滑动次数，防止死循环
     let noNewAvatarCount = 0;
+    let firstTry = true;
     while (maxScroll-- > 0) {
         let avatars = className("android.widget.ImageView").depth(19).untilFind();
+        if (firstTry && avatars.length === 0) {
+            toast("评论区无用户头像，直接退出");
+            closeAndBack();
+            swipeToNextVideo();
+            return;
+        }
+        firstTry = false;
         let hasNew = false;
         for (let i = 0; i < avatars.length; i += 2) {
             let avatar = avatars[i];
@@ -154,21 +162,13 @@ function launchApp(packageName) {
 
 // 打开评论区
 function openCommentSection() {
-    // 先查找评论数控件，判断是否有评论
-    let commentCountNode = textMatches(/\d+/).findOne(DELAY.FIND_ELEMENT);
-    if (commentCountNode) {
-        let count = parseInt(commentCountNode.text());
-        if (isNaN(count) || count === 0) {
-            toast("无评论，跳过");
-            return false;
-        }
-    }
-    // 查找评论按钮
+    // 只判断评论按钮是否存在，存在就点击
     let commentBtn = id("cno").findOne(DELAY.FIND_ELEMENT);
     if (commentBtn) {
         commentBtn.click();
         return true;
     }
+    toast("未找到评论按钮，跳过");
     return false;
 }
 
