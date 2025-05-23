@@ -58,14 +58,7 @@ function handleVideoInteraction() {
         const commentAvatar = getCommentAvatar();
 
         let clickCount = 0;
-        commentAvatar[clickCount].click();
-
-        // 等待用户主页加载
-        sleep(3000);
-        
-        // 返回视频页面
-        back();
-        sleep(DELAY.CLOSE_COMMENT);
+        commentAvatar[clickCount].parent().click();
     } else {
         toast("没有评论，关闭评论区");
         closeCommentSection();
@@ -122,24 +115,6 @@ function getCommentAvatar() {
     
     return commentAvatar
 }
-
-// 用户主页点击
-// function clickCommentAvatar(commentItem) {
-//     // 优先通过ID查找头像
-//     let avatar = commentItem.findOne(idMatches(".*avatar.*|.*icon.*"));
-    
-//     // 备用查找方式
-//     if (!avatar) {
-//         avatar = commentItem.findOne(className("ImageView")
-//             .filter(v => v.bounds().width() > 30));
-//     }
-
-//     if (avatar) {
-//         return click(avatar.bounds().centerX(), avatar.bounds().centerY());
-//     }
-
-//     return false;
-// }
 
 // 返回
 function closeCommentSection() {
