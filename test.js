@@ -64,7 +64,7 @@ function handleVideoInteraction() {
             sleep(2000);
 
             const messageButton = descContains("Message").findOne(DELAY.FIND_ELEMENT);
-            console.log("messageButton", messageButton);
+            console.log("messageButton", messageButton); 
             // if (messageButton) {
             //     messageButton.click();
             //     sleep(DELAY.LOAD_VIDEO);
