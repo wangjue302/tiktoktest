@@ -56,18 +56,8 @@ function handleVideoInteraction() {
         toast("检测到评论");
         const commentAvatar = getCommentAvatar();
 
-         for (let i = 0; i < commentAvatar.length; i++) {
-            if (!clickCommentAvatar(commentAvatar[i])) {
-                console.warn(`第 ${i + 1} 条评论头像点击失败`);
-                continue;
-            }
-
-            // 进入用户主页后的操作
-            handleUserProfile();
-            
-            // 返回评论区继续下一个
-            backToComments();
-        }
+        let clickCount = 0;
+        commentAvatar[clickCount].click();
 
         // 等待用户主页加载
         sleep(3000);
@@ -133,22 +123,22 @@ function getCommentAvatar() {
 }
 
 // 用户主页点击
-function clickCommentAvatar(commentItem) {
-    // 优先通过ID查找头像
-    let avatar = commentItem.findOne(idMatches(".*avatar.*|.*icon.*"));
+// function clickCommentAvatar(commentItem) {
+//     // 优先通过ID查找头像
+//     let avatar = commentItem.findOne(idMatches(".*avatar.*|.*icon.*"));
     
-    // 备用查找方式
-    if (!avatar) {
-        avatar = commentItem.findOne(className("ImageView")
-            .filter(v => v.bounds().width() > 30));
-    }
+//     // 备用查找方式
+//     if (!avatar) {
+//         avatar = commentItem.findOne(className("ImageView")
+//             .filter(v => v.bounds().width() > 30));
+//     }
 
-    if (avatar) {
-        return click(avatar.bounds().centerX(), avatar.bounds().centerY());
-    }
-    
-    return false;
-}
+//     if (avatar) {
+//         return click(avatar.bounds().centerX(), avatar.bounds().centerY());
+//     }
+
+//     return false;
+// }
 
 // 返回
 function closeCommentSection() {
