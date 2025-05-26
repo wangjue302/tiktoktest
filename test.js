@@ -123,9 +123,6 @@ function clickMessageButtonRecursively() {
         sleep(DELAY.WAIT_LOAD);
 
         focusInputAndSendMessage();
-
-        // closeAndBack();
-        // closeAndBack();
     } else {
         toast("未获取到消息按钮");
         closeAndBack();
@@ -164,11 +161,13 @@ function focusInputAndSendMessage() {
             clickableSendButton.click();
             toast("消息已发送");
             sleep(DELAY.WAIT_LOAD);
+            closeAndBack();
         } else {
             toast("未找到发送按钮");
         }
     } else {
         toast("未找到输入框");
+        closeAndBack();
     }
 }
 
