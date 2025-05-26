@@ -129,7 +129,7 @@ function clickMessageButtonRecursively() {
     }
 
     AVATAR_CLICK_COUNT += 2;
-    swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
+    swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.1, 400);
 
     // if (!isVisibleOnScreen(commentAvatar[AVATAR_CLICK_COUNT])) {
     //     swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
