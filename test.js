@@ -87,9 +87,9 @@ function openCommentSection() {
     if (commentButton) {
         const clickableButtonParent = findClickableParent(commentButton);
         console.log("可点击父元素: " + clickableButtonParent);
-        click(clickableButtonParent.bounds().centerX(), clickableButtonParent.bounds().centerY());
+        clickableButtonParent.click();
         sleep(DELAY.WAIT_LOAD);
-        return true; 
+        return true;
     }
     toast("未找到评论按钮");
     return false;
