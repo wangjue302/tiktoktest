@@ -128,10 +128,6 @@ function clickMessageButtonRecursively() {
         sleep(DELAY.WAIT_LOAD);
     }
 
-    AVATAR_CLICK_COUNT += 2;
-    sleep(DELAY.WAIT_LOAD);
-    clickMessageButtonRecursively(); 
-
     const swipeBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
     const BottomBounds = swipeBottom.bounds();
     const swipeTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
@@ -139,6 +135,10 @@ function clickMessageButtonRecursively() {
     console.log("底部容器:", swipeBottom); 
     console.log("顶部容器:", swipeTop);
     swipe(BottomBounds.centerX(), bottomBounds.top - 30, TopBounds.centerX(), topBounds.bottom + 30)
+
+    AVATAR_CLICK_COUNT += 2;
+    sleep(DELAY.WAIT_LOAD);
+    clickMessageButtonRecursively(); 
 }
 
 // 发送消息
