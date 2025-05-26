@@ -102,14 +102,15 @@ function clickMessageButtonRecursively() {
     toast("评论用户数量: " + commentAvatar.length);
 
     const clickableAvatarParent = findClickableParent(commentAvatar[AVATAR_CLICK_COUNT]);
-    const avatarBounds = clickableAvatarParent.bounds();
-    if (!avatarBounds) {
-        toast("未获取到头像控件坐标");
-        closeAndBack();
-        return false;
-    }
+    // const avatarBounds = clickableAvatarParent.bounds();
+    // if (!avatarBounds) {
+    //     toast("未获取到头像控件坐标");
+    //     closeAndBack();
+    //     return false;
+    // }
 
-    click(avatarBounds.centerX(), avatarBounds.centerY());
+    clickableAvatarParent.click();
+    // click(avatarBounds.centerX(), avatarBounds.centerY());
     sleep(DELAY.WAIT_LOAD);
 
     // 用户主页获取Message按钮
