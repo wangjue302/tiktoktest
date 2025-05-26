@@ -90,7 +90,7 @@ function openCommentSection() {
         clickableButtonParent.click();
         return true;
     }
-    toast("未找到评论按钮，跳过");
+    toast("未找到评论按钮");
     return false;
 }
 
