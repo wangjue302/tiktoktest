@@ -89,7 +89,7 @@ function openCommentSection() {
         console.log("可点击父元素: " + clickableButtonParent);
         clickableButtonParent.click();
         sleep(DELAY.WAIT_LOAD);
-        return true;
+        return true; 
     }
     toast("未找到评论按钮");
     return false;
