@@ -87,6 +87,7 @@ function openCommentSection() {
     
     if (commentButton) {
         const clickableButtonParent = findClickableParent(commentButton);
+        console.log("可点击的父元素: " + clickableButtonParent);
         clickableButtonParent.click();
         return true; 
     }
