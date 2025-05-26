@@ -129,10 +129,10 @@ function clickMessageButtonRecursively() {
     }
 
     AVATAR_CLICK_COUNT += 2;
-    if (AVATAR_CLICK_COUNT >= (commentAvatar.length - 1) / 2) {
+    if (AVATAR_CLICK_COUNT > (commentAvatar.length - 1) / 2) {
         AVATAR_CLICK_COUNT = 0
         commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-        swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.6, 400);
+        swipe(device.width / 2, device.height * 0.9, device.width / 2, device.height * 0.6, 400);
     }
 
     sleep(DELAY.WAIT_LOAD);
