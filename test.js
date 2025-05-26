@@ -84,9 +84,9 @@ function launchApp(packageName) {
 function openCommentSection() {
     const commentButton = idContains("cok").findOne(DELAY.FIND_ELEMENT);
     console.log("评论按钮: ", commentButton);
-    const buttonBounds = commentButton.bounds();
-
+    
     if (commentButton) {
+        const buttonBounds = commentButton.bounds();
         click(buttonBounds.centerX(), buttonBounds.centerY());
         return true;
     }
