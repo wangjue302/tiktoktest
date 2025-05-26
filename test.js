@@ -89,7 +89,7 @@ function openCommentSection() {
         click(clickableButtonParent.bounds().centerX(), clickableButtonParent.bounds().centerY());
 
         sleep(DELAY.WAIT_LOAD);
-        return true; 
+        return true;
     }
     toast("未找到评论按钮");
     return false;
