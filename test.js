@@ -101,14 +101,14 @@ function clickMessageButtonRecursively() {
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
     toast("评论用户数量: " + commentAvatar.length);
 
-    const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
+    const clickableAvatarParent = findClickableParent(commentAvatar[AVATAR_CLICK_COUNT]);
+    const avatarBounds = clickableAvatarParent.bounds();
     if (!avatarBounds) {
         toast("未获取到头像控件坐标");
         closeAndBack();
         return false;
     }
 
-    console.log("点击头像坐标: ", avatarBounds.centerX(), avatarBounds.centerY());
     click(avatarBounds.centerX(), avatarBounds.centerY());
     sleep(DELAY.WAIT_LOAD);
 
