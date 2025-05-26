@@ -84,11 +84,10 @@ function launchApp(packageName) {
 function openCommentSection() {
     const commentButton = idContains("cok").findOne(DELAY.FIND_ELEMENT);
     console.log("评论按钮: ", commentButton);
-    const clickableButtonField = findClickableParent(commentButton);
+    const buttonBounds = commentButton.bounds();
 
     if (commentButton) {
-        clickableButtonField.click();
-        // click(buttonBounds.centerX(), buttonBounds.centerY());
+        click(buttonBounds.centerX(), buttonBounds.centerY());
         return true;
     }
     toast("未找到评论按钮，跳过");
