@@ -128,7 +128,7 @@ function clickMessageButtonRecursively() {
         sleep(DELAY.WAIT_LOAD);
     }
 
-    AVATAR_CLICK_COUNT += 2;
+    AVATAR_CLICK_COUNT += 2; 
     if (AVATAR_CLICK_COUNT > (commentAvatar.length - 1) / 2) {
         AVATAR_CLICK_COUNT = 0
         commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
