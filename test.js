@@ -103,7 +103,6 @@ function clickMessageButtonRecursively() {
 
     // const clickableAvatarParent = findClickableParent(commentAvatar[AVATAR_CLICK_COUNT]);
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
-    toast("当前索引: " + AVATAR_CLICK_COUNT);
     if (!avatarBounds) {
         toast("未获取到头像控件坐标");
         closeAndBack();
@@ -111,7 +110,8 @@ function clickMessageButtonRecursively() {
     }
 
     // clickableAvatarParent.click();
-    click(avatarBounds.centerX(), avatarBounds.centerY());
+    gesture(50, [ [avatarBounds.centerX(), avatarBounds.centerY()] ])
+    // click(avatarBounds.centerX(), avatarBounds.centerY());
     sleep(DELAY.WAIT_LOAD);
 
     // 用户主页获取Message按钮
