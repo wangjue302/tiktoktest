@@ -96,7 +96,6 @@ function openCommentSection() {
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
     const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-    toast("评论用户数量: " + commentAvatar.length);
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
@@ -123,8 +122,10 @@ function clickMessageButtonRecursively() {
         click(buttonBounds.centerX(), buttonBounds.centerY());
         sleep(DELAY.WAIT_LOAD);
 
-        closeAndBack();
-        closeAndBack();
+        focusInputAndSendMessage();
+
+        // closeAndBack();
+        // closeAndBack();
     } else {
         toast("未获取到消息按钮");
         closeAndBack();
@@ -134,6 +135,28 @@ function clickMessageButtonRecursively() {
     AVATAR_CLICK_COUNT += 2;
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
+}
+
+function focusInputAndSendMessage() {
+    const inputField = className("android.widget.EditText").depth(19).findOne(DELAY.FIND_ELEMENT);
+    if (inputField) {
+        inputField.click();
+        sleep(DELAY.WAIT_LOAD);
+        setText("Hello, this is a test message!");
+        sleep(DELAY.WAIT_LOAD);
+
+        // 发送消息
+        const sendButton = className("android.widget.Button").text("Send").findOne(DELAY.FIND_ELEMENT);
+        if (sendButton) {
+            sendButton.click();
+            toast("消息已发送");
+            sleep(DELAY.WAIT_LOAD);
+        } else {
+            toast("未找到发送按钮");
+        }
+    } else {
+        toast("未找到输入框");
+    }
 }
 
 // 返回
