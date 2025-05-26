@@ -95,7 +95,8 @@ function openCommentSection() {
 // 评论区用户点击递归方法
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
-    const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+    const commentAvatar = className("android.widget.FrameLayout").depth(18).untilFind();
+    toast("评论用户数量: " + commentAvatar.length);
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
@@ -107,7 +108,7 @@ function clickMessageButtonRecursively() {
     click(avatarBounds.centerX(), avatarBounds.centerY());
     sleep(DELAY.WAIT_LOAD);
 
-    // 通过textContains("Message")获取到的元素的clickable属性是false
+    // 用户主页获取Message按钮
     const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
 
     if (messageButton) {
@@ -131,34 +132,34 @@ function clickMessageButtonRecursively() {
 
 // 发送消息
 function focusInputAndSendMessage() {
-    const inputField = textContains("Message...").findOne(DELAY.FIND_ELEMENT);
-    const clickableInputField = findClickableParent(inputField);
+    closeAndBack();
+    closeAndBack();
+    // const inputField = textContains("Message...").findOne(DELAY.FIND_ELEMENT);
+    // const clickableInputField = findClickableParent(inputField);
 
-    if (clickableInputField) {
-        clickableInputField.click();
-        sleep(DELAY.WAIT_LOAD);
-        setText("Hello!");
-        sleep(DELAY.WAIT_LOAD);
+    // if (clickableInputField) {
+    //     clickableInputField.click();
+    //     sleep(DELAY.WAIT_LOAD);
+    //     setText("Hello!");
+    //     sleep(DELAY.WAIT_LOAD);
 
-        // 发送消息
-        const sendButton = idContains("hf4").findOne(DELAY.FIND_ELEMENT);
-        // const clickableSendButton = findClickableParent(sendButton);
-        const buttonBounds = sendButton.bounds();
+    //     const sendButton = idContains("hf4").findOne(DELAY.FIND_ELEMENT);
+    //     const buttonBounds = sendButton.bounds();
 
-        if (sendButton) {
-            click(buttonBounds.centerX(), buttonBounds.centerY());
-            toast("消息已发送");
-            sleep(DELAY.WAIT_LOAD);
-            closeAndBack();
-            closeAndBack();
-        } else {
-            toast("未找到发送按钮");
-        }
-    } else {
-        toast("未找到输入框");
-        closeAndBack();
-        closeAndBack();
-    }
+    //     if (sendButton) {
+    //         click(buttonBounds.centerX(), buttonBounds.centerY());
+    //         toast("消息已发送");
+    //         sleep(DELAY.WAIT_LOAD);
+    //         closeAndBack();
+    //         closeAndBack();
+    //     } else {
+    //         toast("未找到发送按钮");
+    //     }
+    // } else {
+    //     toast("未找到输入框");
+    //     closeAndBack();
+    //     closeAndBack();
+    // }
 }
 
 // 向上查找可点击的父元素
