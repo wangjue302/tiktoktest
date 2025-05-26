@@ -84,10 +84,12 @@ function launchApp(packageName) {
 function openCommentSection() {
     const commentButton = idContains("cno").findOne(DELAY.FIND_ELEMENT);
     
-    if (commentButton) {
-        const clickableButtonParent = findClickableParent(commentButton);
-        console.log("可点击父元素: " + clickableButtonParent);
-        click(clickableButtonParent.bounds().centerX(), clickableButtonParent.bounds().centerY());
+    if (commentButton) { 
+        // const clickableButtonParent = findClickableParent(commentButton);
+        // console.log("可点击父元素: " + clickableButtonParent);
+        // click(clickableButtonParent.bounds().centerX(), clickableButtonParent.bounds().centerY());
+
+        commentButton.click();
         sleep(DELAY.WAIT_LOAD);
         return true;
     }
