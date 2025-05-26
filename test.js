@@ -88,7 +88,7 @@ function openCommentSection() {
     if (commentButton) {
         const clickableButtonParent = findClickableParent(commentButton);
         clickableButtonParent.click();
-        return true;
+        return true; 
     }
     toast("未找到评论按钮");
     return false;
