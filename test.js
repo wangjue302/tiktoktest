@@ -132,13 +132,11 @@ function clickMessageButtonRecursively() {
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
 
-    if (AVATAR_CLICK_COUNT >= commentAvatar.length / 2) {
-        const swipeBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
-        const BottomBounds = swipeBottom.bounds();
-        const swipeTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
-        const TopBounds = swipeTop.bounds();
-        swipe(BottomBounds.centerX(), bottomBounds.top - 30, TopBounds.centerX(), topBounds.bottom + 30)
-    }
+    const swipeBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
+    const BottomBounds = swipeBottom.bounds();
+    const swipeTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
+    const TopBounds = swipeTop.bounds();
+    swipe(BottomBounds.centerX(), bottomBounds.top - 30, TopBounds.centerX(), topBounds.bottom + 30)
 }
 
 // 发送消息
