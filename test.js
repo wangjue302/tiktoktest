@@ -129,14 +129,11 @@ function clickMessageButtonRecursively() {
     }
 
     AVATAR_CLICK_COUNT += 2;
-    swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.1, 400);
-
-    // if (!isVisibleOnScreen(commentAvatar[AVATAR_CLICK_COUNT])) {
-    //     swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
-    //     sleep(800)
-
-    //     commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-    // }
+    if (AVATAR_CLICK_COUNT >= (commentAvatar.length - 1) / 2) {
+        AVATAR_CLICK_COUNT = 0
+        commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+        swipe(device.width / 2, device.height * 0.7, device.width / 2, device.height * 0.2, 400);
+    }
 
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
