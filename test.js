@@ -82,14 +82,14 @@ function launchApp(packageName) {
 
 // 判断评论按钮是否存在，存在就点击
 function openCommentSection() {
-    const commentButton = idContains("cno").findOne(DELAY.FIND_ELEMENT);
+    const commentButton = id("cno").findOne(DELAY.FIND_ELEMENT);
     
     if (commentButton) { 
-        const clickableButtonParent = findClickableParent(commentButton);
-        console.log("可点击父元素: " + clickableButtonParent);
-        click(clickableButtonParent.bounds().centerX(), clickableButtonParent.bounds().centerY());
+        // const clickableButtonParent = findClickableParent(commentButton);
+        // console.log("可点击父元素: " + clickableButtonParent);
+        // click(clickableButtonParent.bounds().centerX(), clickableButtonParent.bounds().centerY());
 
-        // commentButton.click();
+        commentButton.click();
         sleep(DELAY.WAIT_LOAD);
         return true;
     }
