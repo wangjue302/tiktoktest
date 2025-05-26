@@ -137,12 +137,19 @@ function clickMessageButtonRecursively() {
     clickMessageButtonRecursively(); 
 }
 
+// 发送消息
 function focusInputAndSendMessage() {
-    const inputField = className("android.widget.EditText").depth(19).findOne(DELAY.FIND_ELEMENT);
-    if (inputField) {
-        inputField.click();
+    const inputField = id("hez").findOne(DELAY.FIND_ELEMENT);
+
+    let clickableInputField = inputField;
+    while (clickableInputField && !clickableInputField.clickable()) {
+        clickableInputField = clickableInputField.parent();
+    }
+
+    if (clickableInputField) {
+        clickableInputField.click();
         sleep(DELAY.WAIT_LOAD);
-        setText("Hello, this is a test message!");
+        setText("Hello!");
         sleep(DELAY.WAIT_LOAD);
 
         // 发送消息
