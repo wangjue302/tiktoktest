@@ -54,7 +54,7 @@ function handleVideoInteraction() {
     }
 
     sleep(DELAY.WAIT_LOAD);
-    clickMessageButtonRecursively();
+    // clickMessageButtonRecursively();
 }
 
 // ====== 操作函数 ======
