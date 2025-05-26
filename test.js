@@ -129,13 +129,14 @@ function clickMessageButtonRecursively() {
     }
 
     AVATAR_CLICK_COUNT += 2;
-    if (!isVisibleOnScreen(commentAvatar[AVATAR_CLICK_COUNT])) {
-        // 头像不在可视范围内，向上滑动
-        swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
-        sleep(800)
+    swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
 
-        commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-    }
+    // if (!isVisibleOnScreen(commentAvatar[AVATAR_CLICK_COUNT])) {
+    //     swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
+    //     sleep(800)
+
+    //     commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+    // }
 
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
