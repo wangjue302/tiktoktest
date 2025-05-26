@@ -82,7 +82,7 @@ function launchApp(packageName) {
 
 // 判断评论按钮是否存在，存在就点击
 function openCommentSection() {
-    const commentBtn = descContains("comment").findOne(DELAY.FIND_ELEMENT);
+    const commentBtn = descContains("Comment").findOne(DELAY.FIND_ELEMENT);
     const buttonBounds = commentBtn.bounds();
 
     if (commentBtn) {
