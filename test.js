@@ -83,10 +83,11 @@ function launchApp(packageName) {
 // 判断评论按钮是否存在，存在就点击
 function openCommentSection() {
     const commentButton = className("android.widget.FrameLayout").depth(27).findOne(DELAY.FIND_ELEMENT);
-    const buttonBounds = commentButton.bounds();
+    const clickableButtonField = findClickableParent(commentButton);
 
-    if (commentBtn) {
-        click(buttonBounds.centerX(), buttonBounds.centerY());
+    if (commentButton) {
+        clickableButtonField.click();
+        // click(buttonBounds.centerX(), buttonBounds.centerY());
         return true;
     }
     toast("未找到评论按钮，跳过");
