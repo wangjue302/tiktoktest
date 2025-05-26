@@ -139,7 +139,7 @@ function clickMessageButtonRecursively() {
 
 // 发送消息
 function focusInputAndSendMessage() {
-    const inputField = id("hez").findOne(DELAY.FIND_ELEMENT);
+    const inputField = textContains("Message...").findOne(DELAY.FIND_ELEMENT);
 
     let clickableInputField = inputField;
     while (clickableInputField && !clickableInputField.clickable()) {
