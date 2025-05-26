@@ -80,12 +80,13 @@ function launchApp(packageName) {
     return currentPackage() === packageName;
 }
 
-// 打开评论区
+// 判断评论按钮是否存在，存在就点击
 function openCommentSection() {
-    // 只判断评论按钮是否存在，存在就点击
-    let commentBtn = descContains("comment").findOne(DELAY.FIND_ELEMENT);
+    const commentBtn = descContains("comment").findOne(DELAY.FIND_ELEMENT);
+    const buttonBounds = commentBtn.bounds();
+
     if (commentBtn) {
-        commentBtn.click();
+        click(buttonBounds.centerX(), buttonBounds.centerY());
         return true;
     }
     toast("未找到评论按钮，跳过");
