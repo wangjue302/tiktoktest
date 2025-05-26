@@ -83,7 +83,6 @@ function launchApp(packageName) {
 // 判断评论按钮是否存在，存在就点击
 function openCommentSection() {
     const commentButton = idContains("cok").findOne(DELAY.FIND_ELEMENT);
-    console.log("评论按钮: ", commentButton);
     
     if (commentButton) {
         const buttonBounds = commentButton.bounds();
@@ -130,6 +129,14 @@ function clickMessageButtonRecursively() {
     AVATAR_CLICK_COUNT += 2;
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
+
+    if (AVATAR_CLICK_COUNT >= commentAvatar.length / 2) {
+        const swipeBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
+        const BottomBounds = swipeBottom.bounds();
+        const swipeTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
+        const TopBounds = swipeTop.bounds();
+        swipe(BottomBounds.centerX(), bottomBounds.top - 30, TopBounds.centerX(), topBounds.bottom + 30)
+    }
 }
 
 // 发送消息
