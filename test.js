@@ -153,9 +153,15 @@ function focusInputAndSendMessage() {
         sleep(DELAY.WAIT_LOAD);
 
         // 发送消息
-        const sendButton = className("android.widget.Button").text("Send").findOne(DELAY.FIND_ELEMENT);
-        if (sendButton) {
-            sendButton.click();
+        const sendButton = descContains("send").findOne(DELAY.FIND_ELEMENT);
+
+        let clickableSendButton = sendButton;
+        while (clickableSendButton && !clickableSendButton.clickable()) {
+            clickableSendButton = clickableSendButton.parent();
+        }
+
+        if (clickableSendButton) {
+            clickableSendButton.click();
             toast("消息已发送");
             sleep(DELAY.WAIT_LOAD);
         } else {
