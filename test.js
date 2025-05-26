@@ -111,12 +111,7 @@ function clickMessageButtonRecursively() {
     const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
 
     if (messageButton) {
-        // 向上查找可点击的父元素
-        let clickableButtonParent = messageButton;
-        while (clickableButtonParent && !clickableButtonParent.clickable()) {
-            clickableButtonParent = clickableButtonParent.parent();
-        }
-
+        const clickableButtonParent = findClickableParent(messageButton);
         const buttonBounds = clickableButtonParent.bounds();
 
         click(buttonBounds.centerX(), buttonBounds.centerY());
@@ -137,11 +132,7 @@ function clickMessageButtonRecursively() {
 // 发送消息
 function focusInputAndSendMessage() {
     const inputField = textContains("Message...").findOne(DELAY.FIND_ELEMENT);
-
-    let clickableInputField = inputField;
-    while (clickableInputField && !clickableInputField.clickable()) {
-        clickableInputField = clickableInputField.parent();
-    }
+    const clickableInputField = findClickableParent(inputField);
 
     if (clickableInputField) {
         clickableInputField.click();
@@ -150,17 +141,14 @@ function focusInputAndSendMessage() {
         sleep(DELAY.WAIT_LOAD);
 
         // 发送消息
-        const sendButton = descContains("send").findOne(DELAY.FIND_ELEMENT);
-
-        let clickableSendButton = sendButton;
-        while (clickableSendButton && !clickableSendButton.clickable()) {
-            clickableSendButton = clickableSendButton.parent();
-        }
+        const sendButton = id("hf4").findOne(DELAY.FIND_ELEMENT);
+        const clickableSendButton = findClickableParent(sendButton);
 
         if (clickableSendButton) {
             clickableSendButton.click();
             toast("消息已发送");
             sleep(DELAY.WAIT_LOAD);
+            closeAndBack();
             closeAndBack();
         } else {
             toast("未找到发送按钮");
@@ -168,7 +156,17 @@ function focusInputAndSendMessage() {
     } else {
         toast("未找到输入框");
         closeAndBack();
+        closeAndBack();
     }
+}
+
+// 向上查找可点击的父元素
+function findClickableParent(element) {
+    let parent = element;
+    while (parent && !parent.clickable()) {
+        parent = parent.parent();
+    }
+    return parent;
 }
 
 // 返回
