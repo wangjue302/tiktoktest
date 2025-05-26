@@ -102,6 +102,7 @@ function clickMessageButtonRecursively() {
     toast("评论用户数量: " + commentAvatar.length);
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
+    console.log(avatarBounds)
     if (!avatarBounds) {
         toast("未获取到头像控件坐标");
         closeAndBack();
