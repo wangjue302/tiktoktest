@@ -142,10 +142,11 @@ function focusInputAndSendMessage() {
 
         // 发送消息
         const sendButton = id("hf4").findOne(DELAY.FIND_ELEMENT);
-        const clickableSendButton = findClickableParent(sendButton);
+        // const clickableSendButton = findClickableParent(sendButton);
+        const buttonBounds = sendButton.bounds();
 
-        if (clickableSendButton) {
-            clickableSendButton.click();
+        if (sendButton) {
+            click(buttonBounds.centerX(), buttonBounds.centerY());
             toast("消息已发送");
             sleep(DELAY.WAIT_LOAD);
             closeAndBack();
