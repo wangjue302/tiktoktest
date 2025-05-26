@@ -98,7 +98,7 @@ function openCommentSection() {
 // 评论区用户点击递归方法
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
-    const commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+    let commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
     toast("评论用户数量: " + commentAvatar.length);
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
@@ -128,15 +128,15 @@ function clickMessageButtonRecursively() {
         sleep(DELAY.WAIT_LOAD);
     }
 
-    const swipeBottom = className("android.widget.FrameLayout").depth(15).findOne(DELAY.FIND_ELEMENT);
-    const BottomBounds = swipeBottom.bounds();
-    const swipeTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
-    const TopBounds = swipeTop.bounds();
-    console.log("底部容器:", swipeBottom); 
-    console.log("顶部容器:", swipeTop);
-    swipe(BottomBounds.centerX(), bottomBounds.top - 30, TopBounds.centerX(), topBounds.bottom + 30)
-
     AVATAR_CLICK_COUNT += 2;
+    if (!isVisibleOnScreen(commentAvatar[AVATAR_CLICK_COUNT])) {
+        // 头像不在可视范围内，向上滑动
+        swipe(device.width / 2, device.height * 0.6, device.width / 2, device.height * 0.3, 400);
+        sleep(800)
+
+        commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+    }
+
     sleep(DELAY.WAIT_LOAD);
     clickMessageButtonRecursively(); 
 }
@@ -180,6 +180,12 @@ function findClickableParent(element) {
         parent = parent.parent();
     }
     return parent;
+}
+
+// 检测屏幕上是否可见
+function isVisibleOnScreen(view) {
+    const b = view.bounds();
+    return b.top >= 0 && b.bottom <= device.height;
 }
 
 // 返回
