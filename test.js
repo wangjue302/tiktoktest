@@ -136,8 +136,8 @@ function clickMessageButtonRecursively() {
     const BottomBounds = swipeBottom.bounds();
     const swipeTop = className("android.widget.FrameLayout").depth(10).findOne(DELAY.FIND_ELEMENT);
     const TopBounds = swipeTop.bounds();
-    console.log("BottomBounds:", BottomBounds); 
-    console.log("TopBounds:", TopBounds);
+    console.log("底部容器:", swipeBottom); 
+    console.log("顶部容器:", swipeTop);
     swipe(BottomBounds.centerX(), bottomBounds.top - 30, TopBounds.centerX(), topBounds.bottom + 30)
 }
 
