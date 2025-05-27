@@ -117,8 +117,8 @@ function clickMessageButtonRecursively() {
     console.log("Message按钮: ", messageButton);
 
     if (messageButton) {
-        const clickableButtonParent = findClickableParent(messageButton);
-        const buttonBounds = clickableButtonParent.bounds();
+        // const clickableButtonParent = findClickableParent(messageButton);
+        const buttonBounds = messageButton.bounds();
 
         click(buttonBounds.centerX(), buttonBounds.centerY());
         sleep(DELAY.WAIT_LOAD);
