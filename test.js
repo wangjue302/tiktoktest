@@ -98,7 +98,7 @@ function openCommentSection() {
 // 评论区用户点击递归方法
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
-    let commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+    let commentAvatar = className("android.widget.ImageView").depth(19).untilFind().toArray();
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
@@ -139,7 +139,8 @@ function clickMessageButtonRecursively() {
         // AVATAR_CLICK_COUNT = 0
         // commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
 
-        commentAvatar = commentAvatar.concat(className("android.widget.ImageView").depth(19).untilFind());
+        commentAvatar = [...commentAvatar, className("android.widget.ImageView").depth(19).untilFind().toArray()]
+        // commentAvatar = commentAvatar.concat(className("android.widget.ImageView").depth(19).untilFind());
         swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.5, 400);
     }
 
