@@ -139,7 +139,7 @@ function clickMessageButtonRecursively() {
         // AVATAR_CLICK_COUNT = 0
         // commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
 
-        commentAvatar = [...commentAvatar, className("android.widget.ImageView").depth(19).untilFind()]
+        commentAvatar = commentAvatar.concat(className("android.widget.ImageView").depth(19).untilFind());
         swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.5, 400);
     }
 
