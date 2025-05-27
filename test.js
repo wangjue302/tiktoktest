@@ -116,12 +116,12 @@ function clickMessageButtonRecursively() {
     const messageButton = className("android.widget.LinearLayout").depth(17).findOne(DELAY.FIND_ELEMENT);
 
     if (messageButton) {
-        const clickableButtonParent = findClickableParent(messageButton);
-        console.log("Message按钮: ", clickableButtonParent);
-        // const buttonBounds = messageButton.bounds();
+        // const clickableButtonParent = findClickableParent(messageButton);
+        console.log("Message按钮: ", messageButton);
+        const buttonBounds = messageButton.bounds();
 
-        clickableButtonParent.click();
-        // click(buttonBounds.centerX(), buttonBounds.centerY());
+        // clickableButtonParent.click();
+        click(buttonBounds.centerX(), buttonBounds.centerY());
         sleep(DELAY.WAIT_LOAD);
 
         focusInputAndSendMessage();
