@@ -116,6 +116,7 @@ function clickMessageButtonRecursively() {
     // const messageButton = className("android.widget.LinearLayout").depth(17).findOne(DELAY.FIND_ELEMENT);
 
     const layouts = className("android.widget.LinearLayout").depth(17).find();
+    console.log("Layouts: ", layouts);
 
     for (let i = 0; i < layouts.length; i++) {
         const layout = layouts[i];
