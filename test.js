@@ -111,42 +111,27 @@ function clickMessageButtonRecursively() {
     click(avatarBounds.centerX(), avatarBounds.centerY());
     sleep(DELAY.WAIT_LOAD);
 
-    // 用户主页获取Message按钮
-    // const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
-    // const messageButton = className("android.widget.LinearLayout").depth(17).findOne(DELAY.FIND_ELEMENT);
+    // Funny clips容器  用于判断是否是用户主页
+    const funnyClips = idContains("hm3").findOne(DELAY.FIND_ELEMENT);
 
-    const layouts = className("android.widget.LinearLayout").depth(17).find();
-    console.log("Layouts: ", layouts);
+    if (funnyClips) {
+        const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
 
-    for (let i = 0; i < layouts.length; i++) {
-        const layout = layouts[i];
-        if (layout.findOne(textContains("Message"))) {
-            layout.click();
+        if (messageButton) {
+            const buttonBounds = messageButton.bounds();
+            click(buttonBounds.centerX(), buttonBounds.centerY());
             sleep(DELAY.WAIT_LOAD);
             focusInputAndSendMessage();
-            break;
         } else {
-            toast("未获取到消息按钮");
+            toast("没有消息按钮");
             closeAndBack();
             sleep(DELAY.WAIT_LOAD);
         }
+    } else {
+        toast("不是用户主页");
+        closeAndBack();
+        sleep(DELAY.WAIT_LOAD);
     }
-
-    // if (messageButton) {
-    //     // const clickableButtonParent = findClickableParent(messageButton);
-    //     console.log("Message按钮: ", messageButton);
-    //     const buttonBounds = messageButton.bounds();
-
-    //     // clickableButtonParent.click();
-    //     click(buttonBounds.centerX(), buttonBounds.centerY());
-    //     sleep(DELAY.WAIT_LOAD);
-
-    //     focusInputAndSendMessage();
-    // } else {
-    //     toast("未获取到消息按钮");
-    //     closeAndBack();
-    //     sleep(DELAY.WAIT_LOAD);
-    // }
 
     AVATAR_CLICK_COUNT += 2; 
     if (AVATAR_CLICK_COUNT > (commentAvatar.length - 1) / 2) {
