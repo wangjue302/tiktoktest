@@ -111,10 +111,10 @@ function clickMessageButtonRecursively() {
     click(avatarBounds.centerX(), avatarBounds.centerY());
     sleep(DELAY.WAIT_LOAD);
 
-    // Funny clips容器  用于判断是否是用户主页
-    const funnyClips = idContains("hm3").findOne(DELAY.FIND_ELEMENT);
+    // Following文本  用于判断是否是用户主页
+    const followingText = idContains("mks").findOne(DELAY.FIND_ELEMENT);
 
-    if (funnyClips) {
+    if (followingText) {
         const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
 
         if (messageButton) {
