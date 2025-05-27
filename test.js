@@ -5,7 +5,7 @@ const TIKTOK_PACKAGE = "com.zhiliaoapp.musically";
 // 最大重试次数 
 const MAX_RETRY = 3;
 
-// 评论用户头像点击顺序
+// 评论用户头像点击索引
 let AVATAR_CLICK_COUNT = 0;
 
 // 各种操作的延迟时间(毫秒)                             
@@ -99,12 +99,13 @@ function openCommentSection() {
 function clickMessageButtonRecursively() {
     // 获取评论用户头像
     let commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
-    toast("评论用户数量: " + commentAvatar.length);
 
     const avatarBounds = commentAvatar[AVATAR_CLICK_COUNT].bounds();
     if (!avatarBounds) {
-        toast("未获取到头像控件坐标");
+        toast("没有评论");
         closeAndBack();
+        sleep(DELAY.WAIT_LOAD);
+        swipeToNextVideo();
         return false;
     }
 
@@ -135,8 +136,10 @@ function clickMessageButtonRecursively() {
 
     AVATAR_CLICK_COUNT += 2; 
     if (AVATAR_CLICK_COUNT > (commentAvatar.length - 1) / 2) {
-        AVATAR_CLICK_COUNT = 0
-        commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+        // AVATAR_CLICK_COUNT = 0
+        // commentAvatar = className("android.widget.ImageView").depth(19).untilFind();
+
+        commentAvatar = [...commentAvatar, className("android.widget.ImageView").depth(19).untilFind()]
         swipe(device.width / 2, device.height * 0.8, device.width / 2, device.height * 0.5, 400);
     }
 
