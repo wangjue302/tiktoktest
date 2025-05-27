@@ -114,10 +114,10 @@ function clickMessageButtonRecursively() {
     // 用户主页获取Message按钮
     // const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
     const messageButton = className("android.widget.LinearLayout").depth(17).findOne(DELAY.FIND_ELEMENT);
-    console.log("Message按钮: ", messageButton);
 
     if (messageButton) {
         const clickableButtonParent = findClickableParent(messageButton);
+        console.log("Message按钮: ", clickableButtonParent);
         // const buttonBounds = messageButton.bounds();
 
         clickableButtonParent.click();
