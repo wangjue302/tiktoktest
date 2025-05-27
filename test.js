@@ -112,7 +112,9 @@ function clickMessageButtonRecursively() {
     sleep(DELAY.WAIT_LOAD);
 
     // 用户主页获取Message按钮
-    const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
+    // const messageButton = textContains("Message").findOne(DELAY.FIND_ELEMENT);
+    const messageButton = className("android.widget.LinearLayout").depth(17).findOne(DELAY.FIND_ELEMENT);
+    console.log("Message按钮: ", messageButton);
 
     if (messageButton) {
         const clickableButtonParent = findClickableParent(messageButton);
@@ -178,12 +180,6 @@ function findClickableParent(element) {
         parent = parent.parent();
     }
     return parent;
-}
-
-// 检测屏幕上是否可见
-function isVisibleOnScreen(view) {
-    const b = view.bounds();
-    return b.top >= 0 && b.bottom <= device.height;
 }
 
 // 返回
